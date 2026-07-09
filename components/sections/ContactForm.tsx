@@ -81,6 +81,8 @@ export function ContactForm() {
           {/* Right: form */}
           {sent ? (
             <motion.div
+              role="status"
+              aria-live="polite"
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               className="flex flex-col items-center justify-center rounded-lg border border-line/70 bg-white p-12 text-center"
@@ -103,44 +105,51 @@ export function ContactForm() {
             >
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <Field label="Full Name">
-                  <input required placeholder="Jane Tan" className={inputCls} />
+                  <input name="fullName" required placeholder="Jane Tan" className={inputCls} />
                 </Field>
                 <Field label="Company">
-                  <input placeholder="Company Pte Ltd" className={inputCls} />
+                  <input name="company" placeholder="Company Pte Ltd" className={inputCls} />
                 </Field>
               </div>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <Field label="Email">
-                  <input required type="email" placeholder="jane@company.com" className={inputCls} />
+                  <input name="email" required type="email" placeholder="jane@company.com" className={inputCls} />
                 </Field>
                 <Field label="Phone number">
-                  <input type="tel" placeholder="+65 0000 0000" className={inputCls} />
+                  <input name="phone" type="tel" placeholder="+65 0000 0000" className={inputCls} />
                 </Field>
               </div>
               <Field label="Choose a topic">
-                <select required defaultValue="" className={cn(inputCls, "cursor-pointer")}>
+                <select name="topic" required defaultValue="" className={cn(inputCls, "cursor-pointer")}>
                   <option value="" disabled>Select one…</option>
                   {TOPICS.map((t) => <option key={t}>{t}</option>)}
                 </select>
               </Field>
               <Field label="Message">
                 <textarea
+                  name="message"
                   required
                   rows={5}
                   placeholder="Type your message…"
                   className={cn(inputCls, "h-auto resize-y py-3 leading-relaxed")}
                 />
               </Field>
-              <label className="flex items-center gap-3 text-sm text-ink/80">
+              <div className="flex items-center gap-3 text-sm text-ink/80">
                 <input
+                  id="accept-terms"
+                  name="acceptTerms"
                   type="checkbox"
                   checked={accepted}
                   onChange={(e) => setAccepted(e.target.checked)}
                   required
                   className="h-[18px] w-[18px] accent-accent"
                 />
-                I accept the <a href="#" className="underline decoration-line hover:decoration-accent">Terms</a>
-              </label>
+                {/* Terms link is a sibling of the label so clicking it doesn't toggle the box */}
+                <span>
+                  <label htmlFor="accept-terms">I accept the</label>{" "}
+                  <a href="#" className="underline decoration-line hover:decoration-accent">Terms</a>
+                </span>
+              </div>
               <motion.button
                 type="submit"
                 whileHover={{ y: -2 }}

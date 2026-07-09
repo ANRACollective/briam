@@ -62,6 +62,7 @@ export function LeadGen() {
               </div>
               <input
                 type="email"
+                name="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -79,6 +80,8 @@ export function LeadGen() {
             </form>
             {sent && (
               <motion.p
+                role="status"
+                aria-live="polite"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="mt-4 text-sm text-accent-400"

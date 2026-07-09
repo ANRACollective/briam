@@ -1,19 +1,33 @@
 "use client";
 
+import { MagneticButton } from "@/components/ui/MagneticButton";
 import { cn } from "@/lib/cn";
+import { useActiveSection } from "@/lib/useActiveSection";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const SECTION_IDS = [
+  "home", "solutions", "capabilities", "gateways",
+  "stats", "regional", "markets", "projects", "contact",
+];
 
 const NAV_LINKS = [
-  { label: "Solutions", href: "#solutions", children: [
-    { label: "Standalone Steel Structures", href: "#solutions" },
-    { label: "Engineering Capabilities", href: "#capabilities" },
-    { label: "SCE RD Steel Alliance", href: "#gateways" },
-  ] },
-  { label: "Regional Presence", href: "#regional" },
-  { label: "Contact", href: "#contact" },
+  {
+    label: "Solutions",
+    href: "#solutions",
+    match: ["solutions", "capabilities", "gateways", "stats"],
+    children: [
+      { label: "Standalone Steel Structures", href: "#solutions" },
+      { label: "Engineering Capabilities", href: "#capabilities" },
+      { label: "SCE RD Steel Alliance", href: "#gateways" },
+    ],
+  },
+  { label: "Regional Presence", href: "#regional", match: ["regional", "markets"] },
+  { label: "Contact", href: "#contact", match: ["contact"] },
 ];
+
+const LANGS = ["EN", "中文", "BM"];
 
 function Globe() {
   return (
@@ -33,10 +47,17 @@ function Chevron({ className }: { className?: string }) {
 
 export function Navbar() {
   const reduce = useReducedMotion();
+  const active = useActiveSection(SECTION_IDS);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [lang, setLang] = useState("EN");
   const [langOpen, setLangOpen] = useState(false);
+
+  const solutionsRef = useRef<HTMLLIElement>(null);
+  const langRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -45,16 +66,56 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close popovers on outside click / Escape
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    const onDown = (e: MouseEvent) => {
+      if (solutionsRef.current && !solutionsRef.current.contains(e.target as Node)) setSolutionsOpen(false);
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { setSolutionsOpen(false); setLangOpen(false); }
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
+
+  // Mobile drawer: lock scroll, focus trap, Escape, restore focus
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const drawer = drawerRef.current;
+    const focusables = drawer?.querySelectorAll<HTMLElement>('a[href], button');
+    focusables?.[0]?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { setOpen(false); return; }
+      if (e.key === "Tab" && focusables && focusables.length) {
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
+      toggleRef.current?.focus();
+    };
   }, [open]);
+
+  const isActive = (match?: string[]) => (match ? match.includes(active) : false);
+  const headerH = scrolled ? 60 : 72;
 
   return (
     <motion.header
       initial={reduce ? false : { y: -80 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay: reduce ? 0 : 1.9, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
@@ -64,55 +125,99 @@ export function Navbar() {
     >
       <nav
         className={cn(
-          "mx-auto flex max-w-[1280px] items-center gap-8 px-6 md:px-10 lg:px-16 transition-all duration-300",
+          "mx-auto flex max-w-[1280px] items-center gap-8 px-6 transition-all duration-300 md:px-10 lg:px-16",
           scrolled ? "h-[60px]" : "h-[72px]",
         )}
         aria-label="Primary"
       >
-        {/* Logo */}
-        <a href="#home" className="flex flex-1 items-center gap-2" aria-label="BRIAM Asia home">
+        <a href="#home" className="flex flex-1 items-center gap-2" aria-label="BRIAM Asia, home">
           <Image src="/images/logo-briam-dark.png" alt="BRIAM" width={120} height={38} priority className="h-8 w-auto" />
           <span className="text-lg font-medium text-ink">Asia</span>
         </a>
 
         {/* Desktop nav */}
         <ul className="hidden items-center gap-8 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <li key={link.label} className="group relative">
-              <a
-                href={link.href}
-                className="flex items-center gap-1 text-[17px] font-medium text-ink transition-colors hover:text-accent"
+          {NAV_LINKS.map((link) => {
+            const activeLink = isActive(link.match);
+            if (!link.children) {
+              return (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    aria-current={activeLink ? "true" : undefined}
+                    className={cn(
+                      "relative text-[17px] font-medium transition-colors hover:text-accent",
+                      activeLink ? "text-accent" : "text-ink",
+                    )}
+                  >
+                    {link.label}
+                    <span className={cn("absolute -bottom-1.5 left-0 h-0.5 bg-accent transition-all duration-300", activeLink ? "w-full" : "w-0")} />
+                  </a>
+                </li>
+              );
+            }
+            return (
+              <li
+                key={link.label}
+                ref={solutionsRef}
+                className="relative"
+                onMouseEnter={() => setSolutionsOpen(true)}
+                onMouseLeave={() => setSolutionsOpen(false)}
               >
-                {link.label}
-                {link.children && <Chevron className="transition-transform duration-300 group-hover:rotate-180" />}
-              </a>
-              {link.children && (
-                <div className="invisible absolute left-0 top-full pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                  <div className="min-w-[240px] overflow-hidden rounded-lg border border-line/70 bg-white p-1.5 shadow-xl">
-                    {link.children.map((c) => (
-                      <a
-                        key={c.label}
-                        href={c.href}
-                        className="block rounded-md px-3 py-2.5 text-sm text-ink/80 transition-colors hover:bg-cloud hover:text-accent"
-                      >
-                        {c.label}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </li>
-          ))}
+                <button
+                  type="button"
+                  aria-expanded={solutionsOpen}
+                  aria-haspopup="true"
+                  aria-controls="solutions-menu"
+                  onClick={() => setSolutionsOpen((v) => !v)}
+                  className={cn(
+                    "relative flex items-center gap-1 text-[17px] font-medium transition-colors hover:text-accent",
+                    activeLink ? "text-accent" : "text-ink",
+                  )}
+                >
+                  {link.label}
+                  <Chevron className={cn("transition-transform duration-300", solutionsOpen && "rotate-180")} />
+                  <span className={cn("absolute -bottom-1.5 left-0 h-0.5 bg-accent transition-all duration-300", activeLink ? "w-[calc(100%-22px)]" : "w-0")} />
+                </button>
+                <AnimatePresence>
+                  {solutionsOpen && (
+                    <motion.div
+                      id="solutions-menu"
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute left-0 top-full pt-3"
+                    >
+                      <div className="min-w-[240px] overflow-hidden rounded-lg border border-line/70 bg-white p-1.5 shadow-xl">
+                        {link.children.map((c) => (
+                          <a
+                            key={c.label}
+                            href={c.href}
+                            onClick={() => setSolutionsOpen(false)}
+                            className="block rounded-md px-3 py-2.5 text-sm text-ink/80 transition-colors hover:bg-cloud hover:text-accent"
+                          >
+                            {c.label}
+                          </a>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </li>
+            );
+          })}
         </ul>
 
         {/* Actions */}
         <div className="hidden items-center gap-5 border-l border-line pl-5 lg:flex">
-          <div className="relative">
+          <div className="relative" ref={langRef}>
             <button
               onClick={() => setLangOpen((v) => !v)}
               className="flex items-center gap-1.5 rounded-sm px-2 py-1.5 text-sm text-ink transition-colors hover:text-accent"
               aria-expanded={langOpen}
-              aria-haspopup="listbox"
+              aria-haspopup="true"
+              aria-label={`Language: ${lang}. Change language`}
             >
               <Globe /> {lang} <Chevron className={cn("h-4 w-4 transition-transform", langOpen && "rotate-180")} />
             </button>
@@ -123,11 +228,12 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.18 }}
-                  className="absolute right-0 top-full mt-2 min-w-[100px] overflow-hidden rounded-md border border-line/70 bg-white p-1 shadow-xl"
+                  className="absolute right-0 top-full mt-2 min-w-[110px] overflow-hidden rounded-md border border-line/70 bg-white p-1 shadow-xl"
                   role="listbox"
+                  aria-label="Language"
                 >
-                  {["EN", "中文", "BM"].map((l) => (
-                    <li key={l}>
+                  {LANGS.map((l) => (
+                    <li key={l} role="option" aria-selected={lang === l}>
                       <button
                         onClick={() => { setLang(l); setLangOpen(false); }}
                         className={cn(
@@ -143,20 +249,19 @@ export function Navbar() {
               )}
             </AnimatePresence>
           </div>
-          <a
-            href="#contact"
-            className="group relative inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-[15px] text-white transition-all duration-300 hover:bg-accent-600 hover:shadow-[0_12px_40px_-8px_rgba(119,61,189,0.75)]"
-          >
+          <MagneticButton href="#contact" variant="accent" className="px-5 py-3">
             Get in Touch
-          </a>
+          </MagneticButton>
         </div>
 
         {/* Mobile toggle */}
         <button
+          ref={toggleRef}
           onClick={() => setOpen((v) => !v)}
           className="ml-auto flex h-10 w-10 items-center justify-center rounded-md text-ink lg:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="mobile-drawer"
         >
           <div className="relative h-4 w-6">
             <span className={cn("absolute left-0 h-0.5 w-6 bg-ink transition-all duration-300", open ? "top-1.5 rotate-45" : "top-0")} />
@@ -170,10 +275,16 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-drawer"
+            ref={drawerRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 top-[60px] z-40 bg-ink/95 backdrop-blur-md lg:hidden"
+            style={{ top: headerH }}
+            className="fixed inset-x-0 bottom-0 z-40 bg-ink/95 backdrop-blur-md lg:hidden"
           >
             <motion.ul
               initial="hidden"
@@ -182,10 +293,7 @@ export function Navbar() {
               className="flex flex-col gap-1 px-6 py-8"
             >
               {NAV_LINKS.flatMap((l) => [l, ...(l.children ?? [])]).map((link) => (
-                <motion.li
-                  key={link.label}
-                  variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0 } }}
-                >
+                <motion.li key={link.label} variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0 } }}>
                   <a
                     href={link.href}
                     onClick={() => setOpen(false)}

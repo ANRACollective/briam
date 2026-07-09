@@ -3,24 +3,40 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
-/** Floating "Get in Touch" pill that appears after the hero and hides near the contact form. */
+/**
+ * Floating "Get in Touch" pill. Appears after the hero and hides once the
+ * contact section is in view. Uses IntersectionObservers (no scroll-thrash).
+ */
 export function FloatingCTA() {
   const reduce = useReducedMotion();
-  const [show, setShow] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
+  const [atContact, setAtContact] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      const contact = document.getElementById("contact");
-      const nearContact = contact
-        ? contact.getBoundingClientRect().top < window.innerHeight
-        : false;
-      setShow(y > window.innerHeight * 0.8 && !nearContact);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const hero = document.getElementById("home");
+    const contact = document.getElementById("contact");
+    const observers: IntersectionObserver[] = [];
+
+    if (hero) {
+      const o = new IntersectionObserver(
+        ([e]) => setPastHero(!e.isIntersecting),
+        { threshold: 0, rootMargin: "-40% 0px 0px 0px" },
+      );
+      o.observe(hero);
+      observers.push(o);
+    }
+    if (contact) {
+      const o = new IntersectionObserver(
+        ([e]) => setAtContact(e.isIntersecting),
+        { threshold: 0, rootMargin: "0px 0px -10% 0px" },
+      );
+      o.observe(contact);
+      observers.push(o);
+    }
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
+
+  const show = pastHero && !atContact;
 
   return (
     <AnimatePresence>
@@ -32,7 +48,7 @@ export function FloatingCTA() {
           exit={reduce ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.9 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           whileHover={reduce ? undefined : { y: -3 }}
-          className="fixed bottom-6 right-6 z-40 hidden items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-medium text-white shadow-[0_16px_40px_-10px_rgba(119,61,189,0.85)] md:inline-flex"
+          className="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-white shadow-[0_16px_40px_-10px_rgba(119,61,189,0.85)] md:bottom-6 md:right-6 md:px-6 md:py-3.5"
         >
           {!reduce && (
             <span className="relative flex h-2 w-2">

@@ -8,6 +8,7 @@
   --color-ink: #202d35; /* Primary / text */
   --color-ink-800: #2b3945;
   --color-accent: #773dbd; /* Purple accent */
+  --color-accent-700: #5f2f99; /* AA-contrast purple for small text on light bg */
   --color-accent-600: #8a4fd6;
   --color-accent-400: #a679e0;
   --color-sce: #66adc8; /* SCE blue */
@@ -20,11 +21,6 @@
   /* Fonts (Anton ≈ Druk Text, Poppins ≈ Galano Grotesque) */
   --font-heading: var(--font-anton), "Arial Narrow", sans-serif;
   --font-body: var(--font-poppins), system-ui, sans-serif;
-
-  /* Container + spacing */
-  --spacing-section: 112px;
-  --spacing-section-md: 80px;
-  --spacing-section-sm: 48px;
 
   /* Radii */
   --radius-sm: 4px;

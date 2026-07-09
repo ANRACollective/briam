@@ -34,7 +34,7 @@ const COLUMNS = [
 
 function FooterLink({ href, label }: { href: string; label: string }) {
   return (
-    <a href={href} className="group relative inline-block py-1 text-white/60 transition-colors hover:text-white">
+    <a href={href} className="group relative inline-block py-1 text-white/70 transition-colors hover:text-white">
       {label}
       <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent-400 transition-all duration-300 group-hover:w-full" />
     </a>
@@ -59,7 +59,7 @@ export function Footer() {
               <Image src="/images/logo-briam.png" alt="BRIAM" width={120} height={38} className="h-8 w-auto" />
               <span className="text-lg font-medium">Asia</span>
             </div>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
               Singapore&apos;s gateway to BRIAM Group&apos;s global engineering
               capabilities and the exclusive regional agent for the SCE RD Steel
               Alliance.
@@ -88,7 +88,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-sm text-white/50 md:flex-row md:items-center">
+        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-sm text-white/70 md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} BRIAM Asia. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#" className="transition-colors hover:text-white">Privacy</a>
