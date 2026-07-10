@@ -91,7 +91,7 @@ export function EngineeringCapabilities() {
                     whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
                     viewport={{ once: true, amount: 0.45 }}
                     transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-                    className={`ml-12 md:ml-0 md:w-[calc(50%-2.5rem)] ${left ? "md:mr-auto md:text-right" : "md:ml-auto"}`}
+                    className={`ml-12 text-center md:ml-0 md:w-[calc(50%-2.5rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
                   >
                     <div className="group rounded-lg border border-line/60 bg-white/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-24px_rgba(119,61,189,0.55)]">
                       <span className="font-display block text-4xl leading-none tracking-[-0.02em] text-accent">
