@@ -148,7 +148,15 @@ export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }
 
           {/* pins + interaction */}
           {markets.map((c) => (
-            <div key={`pin-${c.name}`} className="absolute z-10 -translate-x-1/2 -translate-y-1/2" style={{ left: pct(c.cx, VBW), top: pct(c.cy, VBH) }}>
+            <div
+              key={`pin-${c.name}`}
+              className={cn(
+                "absolute -translate-x-1/2 -translate-y-1/2",
+                // active pin sits above all others so its card fully covers nearby dots
+                active === c.name ? "z-50" : "z-10",
+              )}
+              style={{ left: pct(c.cx, VBW), top: pct(c.cy, VBH) }}
+            >
               <button
                 className="block cursor-pointer rounded-full"
                 onMouseEnter={() => setActive(c.name)}
@@ -168,7 +176,7 @@ export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="overflow-hidden rounded-lg border border-white/15 bg-ink/85 shadow-xl backdrop-blur-sm">
+                  <div className="overflow-hidden rounded-lg border border-white/20 bg-ink shadow-xl">
                     <CardInner name={c.name} />
                   </div>
                 </motion.div>

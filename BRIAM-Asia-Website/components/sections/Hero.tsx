@@ -4,14 +4,12 @@ import { Container } from "@/components/ui/Container";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import {
   motion,
-  useMotionValue,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from "motion/react";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 const HEADLINE = ["STRUCTURAL", "STEEL.", "DELIVERED", "ACROSS", "SEA."];
 
@@ -23,26 +21,9 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // Scroll parallax (outer layer)
-  const yImg = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const scaleImg = useTransform(scrollYProgress, [0, 1], [1.08, 1.2]);
+  // Content parallax only — the background image stays static.
   const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  // Pointer parallax (inner layer) — written directly to motion values (no re-render)
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const psx = useSpring(px, { stiffness: 60, damping: 20 });
-  const psy = useSpring(py, { stiffness: 60, damping: 20 });
-  useEffect(() => {
-    if (reduce) return;
-    const onMove = (e: MouseEvent) => {
-      px.set((e.clientX / window.innerWidth - 0.5) * 20);
-      py.set((e.clientY / window.innerHeight - 0.5) * 20);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [reduce, px, py]);
 
   return (
     <section
@@ -50,26 +31,20 @@ export function Hero() {
       id="home"
       className="relative flex min-h-[100svh] items-center overflow-hidden bg-ink pt-[72px]"
     >
-      {/* Background: outer = scroll parallax, inner = pointer parallax */}
-      <motion.div
-        aria-hidden
-        className="absolute inset-0"
-        style={reduce ? undefined : { y: yImg, scale: scaleImg }}
-      >
-        <motion.div className="absolute inset-0" style={reduce ? undefined : { x: psx, y: psy }}>
-          <Image
-            src="/images/hero-steel.jpg"
-            alt="Engineer standing beneath a large radial steel silo structure"
-            fill
-            priority
-            sizes="100vw"
-            className="scale-105 object-cover"
-          />
-        </motion.div>
+      {/* Background: static image (no parallax) */}
+      <div aria-hidden className="absolute inset-0">
+        <Image
+          src="/images/hero-steel.jpg"
+          alt="Engineer standing beneath a large radial steel silo structure"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/45 to-ink/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/30" />
         <div className="absolute -left-40 top-1/3 h-[520px] w-[520px] rounded-full bg-accent/25 blur-[140px]" />
-      </motion.div>
+      </div>
 
       <motion.div style={reduce ? undefined : { y: yContent, opacity }} className="relative w-full">
         <Container className="grid grid-cols-1 items-end gap-12 py-24 lg:grid-cols-2 lg:gap-20 lg:py-28">

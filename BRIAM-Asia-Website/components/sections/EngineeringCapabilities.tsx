@@ -82,10 +82,15 @@ export function EngineeringCapabilities() {
                   </span>
 
                   <motion.div
-                    initial={{ opacity: 0, y: 24, x: reduce ? 0 : left ? -20 : 20 }}
-                    whileInView={{ opacity: 1, y: 0, x: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{
+                      opacity: 0,
+                      y: reduce ? 0 : 40,
+                      x: reduce ? 0 : left ? -110 : 110,
+                      scale: reduce ? 1 : 0.94,
+                    }}
+                    whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+                    viewport={{ once: true, amount: 0.45 }}
+                    transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
                     className={`ml-12 md:ml-0 md:w-[calc(50%-2.5rem)] ${left ? "md:mr-auto md:text-right" : "md:ml-auto"}`}
                   >
                     <div className="group rounded-lg border border-line/60 bg-white/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-24px_rgba(119,61,189,0.55)]">
