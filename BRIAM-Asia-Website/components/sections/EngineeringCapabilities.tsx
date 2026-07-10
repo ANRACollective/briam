@@ -3,6 +3,7 @@
 import { Container } from "@/components/ui/Container";
 import { FloatingSilo } from "@/components/ui/FloatingSilo";
 import { Eyebrow } from "@/components/ui/Section";
+import { STEP_ICONS } from "@/components/ui/icons";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
@@ -27,7 +28,7 @@ export function EngineeringCapabilities() {
   const dotTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="capabilities" className="relative scroll-mt-24 overflow-hidden bg-cloud py-20 md:py-28">
+    <section id="capabilities" className="relative scroll-mt-24 overflow-hidden bg-cloud py-24 md:py-36">
       {/* faint ductwork backdrop */}
       <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.10]">
         <Image src="/images/engineering-ductwork.jpg" alt="" fill className="object-cover" />
@@ -64,9 +65,10 @@ export function EngineeringCapabilities() {
             )}
           </div>
 
-          <ul className="space-y-10 md:space-y-14">
+          <ul className="space-y-12 md:space-y-16">
             {STEPS.map((step, i) => {
               const left = i % 2 === 0;
+              const Icon = STEP_ICONS[i];
               return (
                 <li key={step.n} className="relative">
                   {/* node */}
@@ -93,11 +95,14 @@ export function EngineeringCapabilities() {
                     transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
                     className={`ml-12 text-center md:ml-0 md:w-[calc(50%-2.5rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
                   >
-                    <div className="group rounded-lg border border-line/60 bg-white/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-24px_rgba(119,61,189,0.55)]">
-                      <span className="font-display block text-4xl leading-none tracking-[-0.02em] text-accent">
-                        {step.n}
+                    <div className="group rounded-xl border border-line/60 bg-white/80 p-7 backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.55)] md:p-9">
+                      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+                        <Icon className="h-7 w-7" />
                       </span>
-                      <h3 className="font-display mt-3 text-2xl leading-[0.9] tracking-[-0.01em] text-ink md:text-[1.75rem]">
+                      <span className="font-display mt-5 block text-sm uppercase tracking-[0.18em] text-accent/70">
+                        Step {step.n}
+                      </span>
+                      <h3 className="font-display mt-2 text-2xl leading-[0.9] tracking-[-0.01em] text-ink md:text-[1.75rem]">
                         {step.title}
                       </h3>
                       <p className="mt-3 text-[15px] leading-relaxed text-ink/70">

@@ -1,6 +1,8 @@
 "use client";
 
+import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Container } from "@/components/ui/Container";
+import { IconAlliance, IconParts, IconProjects } from "@/components/ui/icons";
 import { Eyebrow } from "@/components/ui/Section";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
@@ -9,6 +11,7 @@ const CARDS = [
   {
     wordmark: "SCE",
     accent: "var(--color-sce)",
+    Icon: IconProjects,
     image: "/images/steel-silo.jpg",
     title: "Tailor-made square silo projects",
     body: "SCE supplies high-performing, custom-made silo buildings for the biggest names in the feed and food-processing industry worldwide, delivering the highest level of project management and engineering on complex global projects.",
@@ -16,6 +19,7 @@ const CARDS = [
   {
     wordmark: "SILBLOXX",
     accent: "var(--color-silbloxx)",
+    Icon: IconParts,
     image: "/images/silbloxx-hands.jpg",
     title: "Silo-only product supplier",
     body: "Silbloxx serves machine builders, system integrators and the BRIAM Group with silo-only products through an online configurator — the most advanced silo-parts production in the world, made sustainably and cost-effectively.",
@@ -23,6 +27,7 @@ const CARDS = [
   {
     wordmark: "BRIAM",
     accent: "var(--color-ink)",
+    Icon: IconAlliance,
     image: "/images/steel-structure.jpg",
     title: "Your square silo partner",
     body: "Specialised in bulk storage and active all over the world. We bring multiple companies together, each with their own bulk-storage expertise, with one common goal: to create a waste-free world.",
@@ -40,9 +45,9 @@ function ArrowOut() {
 export function Gateways() {
   const reduce = useReducedMotion();
   return (
-    <section id="gateways" className="scroll-mt-24 bg-cloud py-20 md:py-28">
+    <section id="gateways" className="scroll-mt-24 bg-cloud py-24 md:py-36">
       <Container wide>
-        <div className="mb-12 max-w-2xl md:mb-16">
+        <div className="mb-14 max-w-2xl md:mb-20">
           <Eyebrow className="mb-5">The BRIAM Group</Eyebrow>
           <h2 className="font-display text-[clamp(2.4rem,4.5vw,3.6rem)] leading-[0.85] tracking-[-0.02em] text-ink">
             Three gateways,
@@ -50,7 +55,7 @@ export function Gateways() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {CARDS.map((card, i) => (
             <motion.article
               key={card.wordmark}
@@ -91,8 +96,12 @@ export function Gateways() {
                   </div>
                 </div>
               </div>
-              <div className="p-6">
-                <p className="text-sm leading-relaxed text-ink/70">{card.body}</p>
+              <div className="flex flex-1 flex-col p-7 md:p-8">
+                <card.Icon className="h-9 w-9 text-accent" />
+                <p className="mt-5 text-sm leading-relaxed text-ink/70">{card.body}</p>
+                <div className="mt-7">
+                  <ArrowLink href="#contact">Explore</ArrowLink>
+                </div>
               </div>
             </motion.article>
           ))}

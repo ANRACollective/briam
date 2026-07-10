@@ -67,15 +67,15 @@ function Sculpture({ progress, still }: { progress: MotionValue<number>; still: 
     grp.rotation.x = 0.22;
     grp.rotation.z = -0.12;
     if (still) {
-      grp.rotation.y = 0.35;
-      grp.scale.setScalar(1);
+      grp.rotation.y = 0.3;
+      grp.scale.setScalar(1.6);
       return;
     }
     const p = progress.get();
     const t = state.clock.elapsedTime;
     // gentle swirl kept in the frontal hero range so the layout stays readable
-    grp.rotation.y = -0.1 + p * 1.1 + t * 0.04;
-    grp.scale.setScalar(0.92 + p * 0.16);
+    grp.rotation.y = -0.35 + p * 1.1 + t * 0.04;
+    grp.scale.setScalar(1.55 + p * 0.12);
   });
   return (
     <group ref={g}>
@@ -98,8 +98,8 @@ export default function Silo3D({
       shadows
       dpr={[1, 2]}
       gl={{ alpha: true, antialias: true }}
-      camera={{ fov: 45, position: [0, 5, 15] }}
-      onCreated={({ camera }) => (camera as PerspectiveCamera).lookAt(0, 0.6, 0)}
+      camera={{ fov: 45, position: [0, 3.2, 9] }}
+      onCreated={({ camera }) => (camera as PerspectiveCamera).lookAt(0, 0.3, 0)}
       style={{ background: "transparent" }}
     >
       <ambientLight intensity={0.55} />
