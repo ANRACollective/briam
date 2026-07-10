@@ -41,7 +41,7 @@ export function Gateways() {
   const reduce = useReducedMotion();
   return (
     <section id="gateways" className="scroll-mt-24 bg-cloud py-20 md:py-28">
-      <Container>
+      <Container wide>
         <div className="mb-12 max-w-2xl md:mb-16">
           <Eyebrow className="mb-5">The BRIAM Group</Eyebrow>
           <h2 className="font-display text-[clamp(2.4rem,4.5vw,3.6rem)] leading-[0.85] tracking-[-0.02em] text-ink">
@@ -72,7 +72,7 @@ export function Gateways() {
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/40 to-transparent" />
                 {/* floating label card */}
                 <div
-                  className="absolute right-4 top-4 flex h-[210px] w-[190px] flex-col justify-between rounded-sm bg-white p-3 shadow-lg"
+                  className="absolute right-4 top-4 flex w-[190px] flex-col gap-6 rounded-sm bg-white p-3 shadow-lg"
                   style={{ borderLeft: `3px solid ${card.accent}` }}
                 >
                   <span

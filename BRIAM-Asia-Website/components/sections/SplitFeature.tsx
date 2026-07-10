@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
@@ -19,6 +18,10 @@ export type SplitFeatureProps = {
   cta?: { label: string; href: string };
   className?: string;
 };
+
+// Aligns the text column's outer edge with the site's 1280 container gutter,
+// while the image column bleeds fully to the viewport edge (full-bleed hybrid).
+const GUTTER = "max(1.5rem, calc((100vw - 1280px) / 2 + 4rem))";
 
 export function SplitFeature({
   id,
@@ -38,15 +41,19 @@ export function SplitFeature({
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const left = imageSide === "left";
 
   const text = (
-    <div className="flex flex-col justify-center py-14 lg:py-24">
+    <div
+      className="flex flex-col justify-center px-6 py-14 md:px-10 lg:py-28"
+      style={left ? { paddingRight: GUTTER } : { paddingLeft: GUTTER }}
+    >
       <motion.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="max-w-[560px]"
+        className={cn("w-full max-w-[560px] lg:pl-8", left && "lg:ml-auto lg:pl-0 lg:pr-8")}
       >
         {eyebrow && <Eyebrow className="mb-5">{eyebrow}</Eyebrow>}
         <h2 className="font-display text-[clamp(2.6rem,5vw,4.1rem)] leading-[0.85] tracking-[-0.02em] text-accent">
@@ -69,7 +76,7 @@ export function SplitFeature({
   const media = (
     <div
       ref={ref}
-      className="relative min-h-[340px] overflow-hidden rounded-lg lg:min-h-[560px]"
+      className="relative min-h-[360px] overflow-hidden lg:min-h-[620px]"
     >
       <motion.div
         className="absolute inset-0"
@@ -79,7 +86,7 @@ export function SplitFeature({
           src={image}
           alt={imageAlt}
           fill
-          sizes="(max-width: 1024px) 100vw, 60vw"
+          sizes="(max-width: 1024px) 100vw, 55vw"
           className="object-cover"
         />
       </motion.div>
@@ -100,21 +107,19 @@ export function SplitFeature({
 
   return (
     <section id={id} className={cn("scroll-mt-24 bg-cloud", className)}>
-      <Container>
-        <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-16">
-          {imageSide === "left" ? (
-            <>
-              <div className="order-2 lg:order-1">{media}</div>
-              <div className="order-1 lg:order-2">{text}</div>
-            </>
-          ) : (
-            <>
-              {text}
-              {media}
-            </>
-          )}
-        </div>
-      </Container>
+      <div className="grid grid-cols-1 items-stretch lg:grid-cols-2">
+        {left ? (
+          <>
+            <div className="order-2 lg:order-1">{media}</div>
+            <div className="order-1 lg:order-2">{text}</div>
+          </>
+        ) : (
+          <>
+            {text}
+            {media}
+          </>
+        )}
+      </div>
     </section>
   );
 }
