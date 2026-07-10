@@ -33,7 +33,7 @@ export function Hero() {
     <section
       ref={ref}
       id="home"
-      className="relative flex min-h-[100svh] items-center overflow-hidden bg-ink pt-[72px]"
+      className="relative min-h-[100svh] overflow-hidden bg-ink pt-[72px]"
     >
       {/* Background: static image (no parallax) */}
       <div aria-hidden className="absolute inset-0">
@@ -52,7 +52,7 @@ export function Hero() {
       </div>
 
       <motion.div style={reduce ? undefined : { y: yContent, opacity }} className="relative w-full">
-        <Container className="py-24 lg:py-28">
+        <Container className="flex min-h-[calc(100svh-72px)] flex-col py-14 lg:py-20">
           <div className="max-w-[66rem]">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -101,16 +101,16 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: reduce ? 0 : 2.6 }}
-            className="mt-12 flex lg:mt-16 lg:justify-end"
+            className="mt-auto flex justify-end pt-16"
           >
-            <div className="max-w-md">
-              <p className="text-lg text-white/85 md:text-xl">
+            <div className="max-w-xl">
+              <p className="text-xl leading-relaxed text-white/90 md:text-2xl">
                 BRIAM Asia is Singapore&apos;s gateway to BRIAM Group&apos;s global
                 engineering capabilities, including exclusive regional access to the
                 SCE RD Steel Alliance.
               </p>
               <div className="mt-8">
-                <MagneticButton href="#contact" variant="accent" className="px-7 py-3.5 text-base">
+                <MagneticButton href="#contact" variant="accent" className="px-8 py-4 text-base md:text-lg">
                   Get in Touch
                 </MagneticButton>
               </div>
