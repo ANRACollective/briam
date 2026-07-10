@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { FloatingSilo } from "@/components/ui/FloatingSilo";
 import { Eyebrow } from "@/components/ui/Section";
 import { STEP_ICONS } from "@/components/ui/icons";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
@@ -21,8 +20,6 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
   const left = i % 2 === 0;
   const Icon = STEP_ICONS[i];
   const liRef = useRef<HTMLLIElement>(null);
-  // As the card scrolls up into the middle of the viewport it drifts inward
-  // toward the central line; reversible on scroll-up.
   const { scrollYProgress } = useScroll({
     target: liRef,
     offset: ["start end", "center 55%"],
@@ -33,9 +30,8 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
 
   return (
     <li ref={liRef} className="relative">
-      {/* node on the line */}
       <span className="absolute left-4 top-8 z-10 flex h-4 w-4 -translate-x-1/2 items-center justify-center md:left-1/2">
-        <span className="h-4 w-4 rounded-full border-2 border-accent bg-cloud" />
+        <span className="h-4 w-4 rounded-full border-2 border-accent bg-ink" />
         <motion.span
           className="absolute h-4 w-4 rounded-full bg-accent/40"
           initial={{ scale: 0 }}
@@ -49,17 +45,15 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
         style={reduce ? undefined : { x, opacity }}
         className={`ml-14 text-center md:ml-0 md:w-[calc(50%-3rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
       >
-        <div className="group rounded-xl border border-line/60 bg-white/80 p-8 backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.55)] md:p-10">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+        <div className="group rounded-xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:bg-white/[0.09] hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.7)] md:p-10">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/15 text-accent-400 transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
             <Icon className="h-7 w-7" />
           </span>
-          <span className="font-display mt-6 block text-sm uppercase tracking-[0.2em] text-accent/70">
+          <span className="font-display mt-6 block text-sm uppercase tracking-[0.2em] text-accent-400">
             Step {step.n}
           </span>
-          <h3 className="font-display mt-3 text-2xl leading-[0.95] tracking-[-0.01em] text-ink md:text-[1.75rem]">
-            {step.title}
-          </h3>
-          <p className="mt-4 text-[15px] leading-relaxed text-ink/70">{step.body}</p>
+          <h3 className="type-h4 mt-3 text-white">{step.title}</h3>
+          <p className="mt-4 text-[15px] leading-relaxed text-white/65">{step.body}</p>
         </div>
       </motion.div>
     </li>
@@ -68,39 +62,59 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
 
 export function EngineeringCapabilities() {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 65%", "end 60%"],
-  });
+
+  // timeline fill
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 65%", "end 60%"] });
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const dotTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
+  // background sculpture twirl (whole-section scroll)
+  const { scrollYProgress: bgProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const bgRotate = useTransform(bgProgress, [0, 1], [-14, 14]);
+  const bgScale = useTransform(bgProgress, [0, 0.5, 1], [0.9, 1.06, 1.16]);
+  const bgY = useTransform(bgProgress, [0, 1], ["-6%", "6%"]);
+
   return (
-    <section id="capabilities" className="relative scroll-mt-24 overflow-hidden bg-cloud py-24 md:py-36">
-      {/* faint ductwork backdrop */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.10]">
-        <Image src="/images/engineering-ductwork.jpg" alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-cloud/40" />
-      </div>
+    <section
+      ref={sectionRef}
+      id="capabilities"
+      className="relative scroll-mt-24 overflow-hidden bg-ink py-24 text-white md:py-36"
+    >
+      {/* twirling BRIAM sculpture background (white render on black → blends into ink) */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[78%] w-[92%] max-w-[1000px] -translate-x-1/2 -translate-y-1/2"
+        style={reduce ? undefined : { rotate: bgRotate, scale: bgScale, y: bgY }}
+      >
+        <Image
+          src="/images/sculpture.png"
+          alt=""
+          fill
+          sizes="80vw"
+          className="object-contain opacity-70 mix-blend-lighten"
+        />
+      </motion.div>
+      {/* soft accent wash */}
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.06] blur-[160px]" />
 
-      {/* floating square silos drifting behind the timeline */}
-      <FloatingSilo className="absolute top-28 -left-10 hidden w-48 opacity-[0.35] lg:block xl:left-6" floatDelay={0.4} />
-      <FloatingSilo className="absolute bottom-24 -right-10 hidden w-52 opacity-30 lg:block xl:right-6" floatDelay={1.6} />
-
-      <Container className="relative">
+      <Container className="relative z-10">
         <div className="mx-auto mb-16 max-w-2xl text-center md:mb-24">
-          <Eyebrow className="mb-5 justify-center">Engineering Capabilities</Eyebrow>
-          <h2 className="type-h2 text-ink">
+          <Eyebrow tone="light" className="mb-5 justify-center">Engineering Capabilities</Eyebrow>
+          <h2 className="type-h2 text-white">
             End-to-end,
             <br />
-            <span className="text-accent">from design to service</span>
+            <span className="text-accent-400">from design to service</span>
           </h2>
         </div>
 
         <div ref={ref} className="relative mx-auto max-w-4xl">
-          {/* central spine: fills top→bottom on scroll, led by a glowing dot */}
-          <div className="absolute left-4 top-0 h-full w-[3px] bg-ink/15 md:left-1/2 md:-translate-x-1/2">
+          {/* central spine */}
+          <div className="absolute left-4 top-0 h-full w-[3px] bg-white/15 md:left-1/2 md:-translate-x-1/2">
             <motion.div
               className="absolute left-0 top-0 w-full origin-top bg-gradient-to-b from-accent to-sce"
               style={reduce ? { height: "100%" } : { height: "100%", scaleY: lineScale }}
