@@ -126,7 +126,7 @@ export function Navbar() {
     >
       <nav
         className={cn(
-          "mx-auto flex max-w-[1280px] items-center gap-8 px-6 transition-all duration-300 md:px-10 lg:px-16",
+          "mx-auto flex max-w-[2100px] items-center gap-8 px-6 transition-all duration-300 md:px-10 lg:px-16 xl:px-24",
           scrolled ? "h-[60px]" : "h-[72px]",
         )}
         aria-label="Primary"

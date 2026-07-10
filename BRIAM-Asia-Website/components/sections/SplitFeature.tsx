@@ -21,7 +21,6 @@ export type SplitFeatureProps = {
 
 // Aligns the text column's outer edge with the site's 1280 container gutter,
 // while the image column bleeds fully to the viewport edge (full-bleed hybrid).
-const GUTTER = "max(1.5rem, calc((100vw - 1280px) / 2 + 4rem))";
 
 export function SplitFeature({
   id,
@@ -44,16 +43,13 @@ export function SplitFeature({
   const left = imageSide === "left";
 
   const text = (
-    <div
-      className="flex flex-col justify-center px-6 py-14 md:px-10 lg:py-28"
-      style={left ? { paddingRight: GUTTER } : { paddingLeft: GUTTER }}
-    >
+    <div className="flex flex-col justify-center px-6 py-14 md:px-10 lg:px-16 lg:py-28 xl:px-24">
       <motion.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className={cn("w-full max-w-[560px] lg:pl-8", left && "lg:ml-auto lg:pl-0 lg:pr-8")}
+        className={cn("w-full max-w-[600px]", left && "lg:ml-auto")}
       >
         {eyebrow && <Eyebrow className="mb-5">{eyebrow}</Eyebrow>}
         <h2 className="font-display text-[clamp(2.6rem,5vw,4.1rem)] leading-[0.85] tracking-[-0.02em] text-accent">
