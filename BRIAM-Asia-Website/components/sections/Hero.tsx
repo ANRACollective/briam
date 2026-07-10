@@ -11,7 +11,11 @@ import {
 import Image from "next/image";
 import { useRef } from "react";
 
-const HEADLINE = ["STRUCTURAL", "STEEL.", "DELIVERED", "ACROSS", "SEA."];
+// Two fixed lines to match the Figma break.
+const HEADLINE = [
+  ["STRUCTURAL", "STEEL."],
+  ["DELIVERED", "ACROSS", "SEA."],
+];
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -41,14 +45,15 @@ export function Hero() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/45 to-ink/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/30" />
-        <div className="absolute -left-40 top-1/3 h-[520px] w-[520px] rounded-full bg-accent/25 blur-[140px]" />
+        {/* lighter scrim — keeps the left text legible while letting the image read clearly */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent" />
+        <div className="absolute -left-40 top-1/3 h-[460px] w-[460px] rounded-full bg-accent/15 blur-[150px]" />
       </div>
 
       <motion.div style={reduce ? undefined : { y: yContent, opacity }} className="relative w-full">
-        <Container className="grid grid-cols-1 items-end gap-12 py-24 lg:grid-cols-2 lg:gap-20 lg:py-28">
-          <div>
+        <Container className="py-24 lg:py-28">
+          <div className="max-w-[66rem]">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -58,17 +63,25 @@ export function Hero() {
               <span className="h-px w-8 bg-accent-400" /> BRIAM Asia · Singapore
             </motion.p>
 
-            <h1 className="font-display text-[clamp(3rem,8vw,5.6rem)] leading-[0.98] tracking-[-0.02em] text-white [text-wrap:balance]">
-              {HEADLINE.map((word, i) => (
-                <span key={i} className="mr-[0.25em] inline-block overflow-hidden align-top">
-                  <motion.span
-                    className="inline-block"
-                    initial={reduce ? false : { y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.7, delay: (reduce ? 0 : 2.05) + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    {word}
-                  </motion.span>
+            <h1 className="font-display text-[clamp(3.25rem,8vw,6rem)] leading-[0.85] tracking-[-0.045em] text-white">
+              {HEADLINE.map((line, li) => (
+                <span key={li} className="block">
+                  {line.map((word, wi) => {
+                    const idx =
+                      HEADLINE.slice(0, li).reduce((n, l) => n + l.length, 0) + wi;
+                    return (
+                      <span key={wi} className="mr-[0.16em] inline-block overflow-hidden align-top">
+                        <motion.span
+                          className="inline-block"
+                          initial={reduce ? false : { y: "110%" }}
+                          animate={{ y: 0 }}
+                          transition={{ duration: 0.7, delay: (reduce ? 0 : 2.05) + idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                          {word}
+                        </motion.span>
+                      </span>
+                    );
+                  })}
                 </span>
               ))}
             </h1>
@@ -77,7 +90,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: reduce ? 0 : 2.5 }}
-              className="mt-6 max-w-md text-lg text-white/85 md:text-xl"
+              className="mt-7 max-w-lg text-lg text-white/85 md:text-xl"
             >
               The only regional agent for SCE RD Steel Alliance — standalone steel
               structures, no silo project required.
@@ -88,17 +101,19 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: reduce ? 0 : 2.6 }}
-            className="lg:pb-2"
+            className="mt-12 flex lg:mt-16 lg:justify-end"
           >
-            <p className="max-w-md text-lg text-white/85 md:text-xl">
-              BRIAM Asia is Singapore&apos;s gateway to BRIAM Group&apos;s global
-              engineering capabilities, including exclusive regional access to the
-              SCE RD Steel Alliance.
-            </p>
-            <div className="mt-8">
-              <MagneticButton href="#contact" variant="accent" className="px-7 py-3.5 text-base">
-                Get in Touch
-              </MagneticButton>
+            <div className="max-w-md">
+              <p className="text-lg text-white/85 md:text-xl">
+                BRIAM Asia is Singapore&apos;s gateway to BRIAM Group&apos;s global
+                engineering capabilities, including exclusive regional access to the
+                SCE RD Steel Alliance.
+              </p>
+              <div className="mt-8">
+                <MagneticButton href="#contact" variant="accent" className="px-7 py-3.5 text-base">
+                  Get in Touch
+                </MagneticButton>
+              </div>
             </div>
           </motion.div>
         </Container>
