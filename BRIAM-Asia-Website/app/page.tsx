@@ -8,7 +8,6 @@ import { MarketsMap } from "@/components/sections/MarketsMap";
 import { Navbar } from "@/components/sections/Navbar";
 import { Projects } from "@/components/sections/Projects";
 import { RegionalPresence } from "@/components/sections/RegionalPresence";
-import { SiloAssembly } from "@/components/sections/SiloAssembly";
 import { SplitFeature } from "@/components/sections/SplitFeature";
 import { SteelAlliance } from "@/components/sections/SteelAlliance";
 import { Stats } from "@/components/sections/Stats";
@@ -50,7 +49,6 @@ export default function Home() {
         <Gateways />
         <SteelAlliance />
         <Stats />
-        <SiloAssembly />
         <RegionalPresence />
         <MarketsMap variant="pins" />
         <LeadGen />
