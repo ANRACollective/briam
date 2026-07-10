@@ -74,8 +74,8 @@ function CardInner({ name }: { name: string }) {
   const m = META[name];
   return (
     <>
-      <div className="relative h-16 w-full">
-        <Image src={m.img} alt={name} fill sizes="180px" className="object-cover" />
+      <div className="relative h-24 w-full">
+        <Image src={m.img} alt={name} fill sizes="230px" className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/75 to-transparent" />
       </div>
       <div className="px-3 py-2">
@@ -109,7 +109,7 @@ export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }
 
         {/* ---------- Desktop: interactive map ---------- */}
         <div
-          className="relative mx-auto hidden w-full max-w-[960px] lg:block"
+          className="relative mx-auto hidden w-full max-w-[1160px] lg:block"
           style={{ aspectRatio: `${VBW} / ${VBH}` }}
         >
           <svg viewBox={seaMap.viewBox} className="absolute inset-0 h-full w-full" aria-hidden>
@@ -170,7 +170,7 @@ export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }
               {/* pins variant: popover card on hover */}
               {!isCards && active === c.name && (
                 <motion.div
-                  className="absolute left-1/2 z-30 w-[176px] -translate-x-1/2"
+                  className="absolute left-1/2 z-30 w-[220px] -translate-x-1/2"
                   style={{ bottom: "calc(50% + 14px)" }}
                   initial={{ opacity: 0, y: 8, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -190,7 +190,7 @@ export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }
             return (
               <motion.button
                 key={`card-${c.name}`}
-                className="absolute z-20 w-[150px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border border-white/15 bg-ink/80 text-left shadow-xl backdrop-blur-sm focus:z-30"
+                className="absolute z-20 w-[188px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border border-white/15 bg-ink/80 text-left shadow-xl backdrop-blur-sm focus:z-30"
                 style={{ left: pct(c.cx + m.dx, VBW), top: pct(c.cy + m.dy, VBH) }}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
