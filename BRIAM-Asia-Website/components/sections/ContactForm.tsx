@@ -43,7 +43,7 @@ export function ContactForm() {
           <div className="flex flex-col justify-between">
             <div>
               <Eyebrow className="mb-5">Get in touch</Eyebrow>
-              <h2 className="font-display text-[clamp(2.8rem,6vw,4.5rem)] uppercase leading-[0.85] tracking-[-0.02em] text-ink">
+              <h2 className="type-h2 text-ink">
                 Contact us
               </h2>
             </div>

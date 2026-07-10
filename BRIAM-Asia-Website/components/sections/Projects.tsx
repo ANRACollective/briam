@@ -29,7 +29,7 @@ export function Projects() {
       <Container wide>
         <div className="mb-12 text-center md:mb-16">
           <Eyebrow className="mb-5 justify-center">Case studies</Eyebrow>
-          <h2 className="font-display text-[clamp(2.6rem,5vw,4rem)] uppercase leading-[0.85] tracking-[-0.02em] text-accent">
+          <h2 className="type-h2 text-accent">
             Featured projects
           </h2>
         </div>

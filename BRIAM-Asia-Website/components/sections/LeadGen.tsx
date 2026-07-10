@@ -40,7 +40,7 @@ export function LeadGen() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-[clamp(2.2rem,4.5vw,3.4rem)] uppercase leading-[0.85] tracking-[-0.02em] text-white"
+              className="type-h2 text-white"
             >
               Get the full SCE RD Steel Alliance capability deck.
             </motion.h2>

@@ -95,6 +95,84 @@ body {
   box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--color-accent) 55%, transparent);
 }
 
+/* Intro splash — CSS-driven so it renders at first paint (no wait for JS
+   hydration, which otherwise leaves a blank hold then a late logo pop). */
+.intro-curtain {
+  animation: intro-curtain 2.1s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+.intro-logo {
+  animation: intro-logo 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.intro-line {
+  animation: intro-line 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes intro-curtain {
+  0%,
+  48% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+@keyframes intro-logo {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+@keyframes intro-line {
+  0%,
+  25% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* ---- Brand type scale (Druk Text headings, line-height 85%) ----
+   Mobile sizes by default, desktop at md+. Matches the brand typography sheet. */
+.type-h1,
+.type-h2,
+.type-h3,
+.type-h4,
+.type-h5,
+.type-h6 {
+  font-family: var(--font-anton), ui-sans-serif, system-ui, sans-serif;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.type-h1 { font-size: 2.5rem; }       /* 40 → 56 */
+.type-h2 { font-size: 2.25rem; }      /* 36 → 48 */
+.type-h3 { font-size: 2rem; }         /* 32 → 40 */
+.type-h4 { font-size: 1.5rem; }       /* 24 → 32 */
+.type-h5 { font-size: 1.25rem; }      /* 20 → 24 */
+.type-h6 { font-size: 1.125rem; line-height: 1.1; } /* 18 → 20 */
+@media (min-width: 768px) {
+  .type-h1 { font-size: 3.5rem; }
+  .type-h2 { font-size: 3rem; }
+  .type-h3 { font-size: 2.5rem; }
+  .type-h4 { font-size: 2rem; }
+  .type-h5 { font-size: 1.5rem; }
+  .type-h6 { font-size: 1.25rem; }
+}
+/* Tagline / small label — 16px, line-height 110% */
+.type-tagline {
+  font-family: var(--font-anton), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
 /* Respect reduced motion globally */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -104,5 +182,13 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+  /* keep the intro logo visible (not mid-blur) when animations are disabled */
+  .intro-logo {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+  .intro-line {
+    transform: scaleX(1) !important;
   }
 }

@@ -98,7 +98,7 @@ export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }
       <Container className="relative">
         <div className="mb-10 max-w-2xl md:mb-14">
           <Eyebrow tone="light" className="mb-5">Coverage</Eyebrow>
-          <h2 className="font-display text-[clamp(2.6rem,5vw,4rem)] uppercase leading-[0.85] tracking-[-0.02em]">
+          <h2 className="type-h2">
             Markets served
           </h2>
           <p className="mt-5 text-lg text-white/70">

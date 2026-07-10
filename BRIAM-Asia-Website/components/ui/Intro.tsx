@@ -1,81 +1,61 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 /**
- * Signature branded intro. Covers the viewport on first paint (so there's no
- * flash), reveals the BRIAM mark, then lifts away to show the hero.
- * Under reduced-motion it does a quick, calm fade instead of the reveal.
+ * Signature branded intro. CSS-driven (not JS/motion) so the logo and curtain
+ * render and animate on the very first paint — without this, the heavy page JS
+ * has to hydrate before the logo appears, leaving a blank dark hold then a late
+ * pop. The React state only removes the element from the DOM once it's done.
  */
 export function Intro() {
-  const reduce = useReducedMotion();
-  const [done, setDone] = useState(false);
+  const [gone, setGone] = useState(false);
 
   useEffect(() => {
-    // Lock scroll while the curtain is up
-    document.body.style.overflow = "hidden";
-    const t = setTimeout(() => setDone(true), reduce ? 500 : 1900);
+    document.documentElement.style.overflow = "hidden";
+    const t = setTimeout(() => setGone(true), 2100);
     return () => {
       clearTimeout(t);
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
-  }, [reduce]);
+  }, []);
 
   useEffect(() => {
-    if (done) document.body.style.overflow = "";
-  }, [done]);
+    if (gone) document.documentElement.style.overflow = "";
+  }, [gone]);
+
+  if (gone) return null;
 
   return (
-    <AnimatePresence>
-      {!done && (
-        <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink"
-          initial={{ opacity: 1 }}
-          exit={reduce ? { opacity: 0 } : { y: "-100%" }}
-          transition={{ duration: reduce ? 0.4 : 0.8, ease: [0.76, 0, 0.24, 1] }}
-        >
-          {/* ambient glow */}
-          <div aria-hidden className="pointer-events-none absolute inset-0">
-            <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-[130px]" />
-          </div>
+    <div
+      aria-hidden
+      className="intro-curtain fixed inset-0 z-[100] flex items-center justify-center bg-ink"
+    >
+      {/* ambient glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-[130px]" />
+      </div>
 
-          <div className="relative flex flex-col items-center">
-            {/* Logo image is the centered anchor (fixed width); "Asia" is
-                absolutely positioned so a late-loading font can't re-center
-                the group and cause the horizontal shift on refresh. */}
-            <motion.div
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14, filter: "blur(6px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex -translate-x-[14px] items-end justify-center md:-translate-x-[18px]"
-            >
-              <Image
-                src="/images/logo-briam.png"
-                alt="BRIAM Asia"
-                width={180}
-                height={57}
-                priority
-                className="h-10 w-auto md:h-14"
-              />
-              <span className="pointer-events-none absolute bottom-1 left-full ml-2 whitespace-nowrap text-xl font-medium text-white md:text-2xl">
-                Asia
-              </span>
-            </motion.div>
+      <div className="relative flex flex-col items-center">
+        {/* Logo image is the centered anchor; "Asia" is absolutely positioned so
+            a late-loading font can't re-center the group and shift it. */}
+        <div className="intro-logo relative flex -translate-x-[14px] items-end justify-center md:-translate-x-[18px]">
+          <Image
+            src="/images/logo-briam.png"
+            alt="BRIAM Asia"
+            width={180}
+            height={57}
+            priority
+            className="h-10 w-auto md:h-14"
+          />
+          <span className="pointer-events-none absolute bottom-1 left-full ml-2 whitespace-nowrap text-xl font-medium text-white md:text-2xl">
+            Asia
+          </span>
+        </div>
 
-            {/* accent line draw */}
-            {!reduce && (
-              <motion.span
-                className="mt-6 block h-[2px] w-40 origin-left bg-gradient-to-r from-accent via-accent-400 to-sce"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              />
-            )}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        <span className="intro-line mt-6 block h-[2px] w-40 origin-left bg-gradient-to-r from-accent via-accent-400 to-sce" />
+      </div>
+    </div>
   );
 }

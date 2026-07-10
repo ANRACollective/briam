@@ -49,7 +49,7 @@ export function Gateways() {
       <Container wide>
         <div className="mb-14 max-w-2xl md:mb-20">
           <Eyebrow className="mb-5">The BRIAM Group</Eyebrow>
-          <h2 className="font-display text-[clamp(2.4rem,4.5vw,3.6rem)] leading-[0.85] tracking-[-0.02em] text-ink">
+          <h2 className="type-h2 text-ink">
             Three gateways,
             <span className="text-accent"> one square-silo alliance</span>
           </h2>

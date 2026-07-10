@@ -46,7 +46,7 @@ export function RegionalPresence() {
       <Container>
         <div className="mb-12 max-w-2xl">
           <Eyebrow className="mb-5">Regional Presence</Eyebrow>
-          <h2 className="font-display text-[clamp(2.4rem,4.5vw,3.4rem)] uppercase leading-[0.85] tracking-[-0.02em] text-ink">
+          <h2 className="type-h2 text-ink">
             Rooted in Singapore, <span className="text-accent">building across the region</span>
           </h2>
         </div>

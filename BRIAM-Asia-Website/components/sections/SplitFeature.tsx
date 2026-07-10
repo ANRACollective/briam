@@ -52,7 +52,7 @@ export function SplitFeature({
         className={cn("w-full max-w-[600px]", left && "lg:ml-auto")}
       >
         {eyebrow && <Eyebrow className="mb-5">{eyebrow}</Eyebrow>}
-        <h2 className="font-display text-[clamp(2.6rem,5vw,4.1rem)] leading-[0.85] tracking-[-0.02em] text-accent">
+        <h2 className="type-h2 text-accent">
           {title}
         </h2>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-ink/80">

@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { FloatingSilo } from "@/components/ui/FloatingSilo";
 import { Eyebrow } from "@/components/ui/Section";
 import { STEP_ICONS } from "@/components/ui/icons";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
 
@@ -16,6 +16,55 @@ const STEPS = [
   { n: "05", title: "Aeration & Drying", body: "Temperature control and ventilation systems for stored materials." },
   { n: "06", title: "Maintenance & Service", body: "Post-installation inspection, parts supply, and technical support." },
 ];
+
+function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number; reduce: boolean }) {
+  const left = i % 2 === 0;
+  const Icon = STEP_ICONS[i];
+  const liRef = useRef<HTMLLIElement>(null);
+  // As the card scrolls up into the middle of the viewport it drifts inward
+  // toward the central line; reversible on scroll-up.
+  const { scrollYProgress } = useScroll({
+    target: liRef,
+    offset: ["start end", "center 55%"],
+  });
+  const xRaw = useTransform(scrollYProgress, [0, 1], [left ? -120 : 120, 0]);
+  const x = useSpring(xRaw, { stiffness: 55, damping: 18, mass: 0.6 });
+  const opacity = useTransform(scrollYProgress, [0, 0.45], [0, 1]);
+
+  return (
+    <li ref={liRef} className="relative">
+      {/* node on the line */}
+      <span className="absolute left-4 top-8 z-10 flex h-4 w-4 -translate-x-1/2 items-center justify-center md:left-1/2">
+        <span className="h-4 w-4 rounded-full border-2 border-accent bg-cloud" />
+        <motion.span
+          className="absolute h-4 w-4 rounded-full bg-accent/40"
+          initial={{ scale: 0 }}
+          whileInView={reduce ? undefined : { scale: [0, 1.8, 1], opacity: [0.6, 0, 0] }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 1.2 }}
+        />
+      </span>
+
+      <motion.div
+        style={reduce ? undefined : { x, opacity }}
+        className={`ml-14 text-center md:ml-0 md:w-[calc(50%-3rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
+      >
+        <div className="group rounded-xl border border-line/60 bg-white/80 p-8 backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.55)] md:p-10">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+            <Icon className="h-7 w-7" />
+          </span>
+          <span className="font-display mt-6 block text-sm uppercase tracking-[0.2em] text-accent/70">
+            Step {step.n}
+          </span>
+          <h3 className="font-display mt-3 text-2xl leading-[0.95] tracking-[-0.01em] text-ink md:text-[1.75rem]">
+            {step.title}
+          </h3>
+          <p className="mt-4 text-[15px] leading-relaxed text-ink/70">{step.body}</p>
+        </div>
+      </motion.div>
+    </li>
+  );
+}
 
 export function EngineeringCapabilities() {
   const reduce = useReducedMotion();
@@ -40,9 +89,9 @@ export function EngineeringCapabilities() {
       <FloatingSilo className="absolute bottom-24 -right-10 hidden w-52 opacity-30 lg:block xl:right-6" floatDelay={1.6} />
 
       <Container className="relative">
-        <div className="mx-auto mb-14 max-w-2xl text-center md:mb-20">
+        <div className="mx-auto mb-16 max-w-2xl text-center md:mb-24">
           <Eyebrow className="mb-5 justify-center">Engineering Capabilities</Eyebrow>
-          <h2 className="font-display text-[clamp(2.6rem,5vw,4rem)] leading-[0.85] tracking-[-0.02em] text-ink">
+          <h2 className="type-h2 text-ink">
             End-to-end,
             <br />
             <span className="text-accent">from design to service</span>
@@ -65,54 +114,10 @@ export function EngineeringCapabilities() {
             )}
           </div>
 
-          <ul className="space-y-12 md:space-y-16">
-            {STEPS.map((step, i) => {
-              const left = i % 2 === 0;
-              const Icon = STEP_ICONS[i];
-              return (
-                <li key={step.n} className="relative">
-                  {/* node */}
-                  <span className="absolute left-4 top-6 z-10 flex h-4 w-4 -translate-x-1/2 items-center justify-center md:left-1/2">
-                    <span className="h-4 w-4 rounded-full border-2 border-accent bg-cloud" />
-                    <motion.span
-                      className="absolute h-4 w-4 rounded-full bg-accent/40"
-                      initial={{ scale: 0 }}
-                      whileInView={reduce ? undefined : { scale: [0, 1.8, 1], opacity: [0.6, 0, 0] }}
-                      viewport={{ once: true, amount: 0.8 }}
-                      transition={{ duration: 1.2 }}
-                    />
-                  </span>
-
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: reduce ? 0 : 40,
-                      x: reduce ? 0 : left ? -110 : 110,
-                      scale: reduce ? 1 : 0.94,
-                    }}
-                    whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-                    viewport={{ once: true, amount: 0.45 }}
-                    transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-                    className={`ml-12 text-center md:ml-0 md:w-[calc(50%-2.5rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
-                  >
-                    <div className="group rounded-xl border border-line/60 bg-white/80 p-7 backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.55)] md:p-9">
-                      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
-                        <Icon className="h-7 w-7" />
-                      </span>
-                      <span className="font-display mt-5 block text-sm uppercase tracking-[0.18em] text-accent/70">
-                        Step {step.n}
-                      </span>
-                      <h3 className="font-display mt-2 text-2xl leading-[0.9] tracking-[-0.01em] text-ink md:text-[1.75rem]">
-                        {step.title}
-                      </h3>
-                      <p className="mt-3 text-[15px] leading-relaxed text-ink/70">
-                        {step.body}
-                      </p>
-                    </div>
-                  </motion.div>
-                </li>
-              );
-            })}
+          <ul className="space-y-16 md:space-y-24">
+            {STEPS.map((step, i) => (
+              <StepCard key={step.n} step={step} i={i} reduce={!!reduce} />
+            ))}
           </ul>
         </div>
       </Container>

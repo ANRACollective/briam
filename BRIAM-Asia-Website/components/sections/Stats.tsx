@@ -41,7 +41,7 @@ export function Stats() {
             className="relative z-10 max-w-xl"
           >
             <Eyebrow className="mb-5">By the numbers</Eyebrow>
-            <h2 className="font-display text-[clamp(2.4rem,4.6vw,4rem)] uppercase leading-[0.85] tracking-[-0.02em] text-ink">
+            <h2 className="type-h2 text-ink">
               Engineering capability, delivered across Southeast Asia
             </h2>
             <p className="mt-6 max-w-md text-lg text-ink/70">

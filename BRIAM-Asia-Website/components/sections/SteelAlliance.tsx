@@ -32,7 +32,7 @@ export function SteelAlliance() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-[clamp(2.4rem,5vw,3.6rem)] uppercase leading-[0.85] tracking-[-0.02em]"
+              className="type-h2"
             >
               Standalone structural steel, delivered across Southeast Asia.
             </motion.h2>

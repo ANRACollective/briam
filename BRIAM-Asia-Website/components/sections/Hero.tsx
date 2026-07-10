@@ -70,7 +70,7 @@ export function Hero() {
                     const idx =
                       HEADLINE.slice(0, li).reduce((n, l) => n + l.length, 0) + wi;
                     return (
-                      <span key={wi} className="mr-[0.16em] inline-block overflow-hidden align-top">
+                      <span key={wi} className="mr-[0.24em] inline-block overflow-hidden align-top">
                         <motion.span
                           className="inline-block"
                           initial={reduce ? false : { y: "110%" }}
