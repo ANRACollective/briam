@@ -76,7 +76,7 @@ export function EngineeringCapabilities() {
     offset: ["start end", "end start"],
   });
   const bgRotate = useTransform(bgProgress, [0, 1], [-14, 14]);
-  const bgScale = useTransform(bgProgress, [0, 0.5, 1], [0.9, 1.06, 1.16]);
+  const bgScale = useTransform(bgProgress, [0, 0.5, 1], [1.08, 1.24, 1.36]);
   const bgY = useTransform(bgProgress, [0, 1], ["-6%", "6%"]);
 
   return (
@@ -88,7 +88,7 @@ export function EngineeringCapabilities() {
       {/* twirling BRIAM sculpture background (white render on black → blends into ink) */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[78%] w-[92%] max-w-[1000px] -translate-x-1/2 -translate-y-1/2"
+        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[98%] w-[120%] max-w-[1500px] -translate-x-1/2 -translate-y-1/2"
         style={reduce ? undefined : { rotate: bgRotate, scale: bgScale, y: bgY }}
       >
         <Image
