@@ -48,7 +48,7 @@ export function FloatingCTA() {
           exit={reduce ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.9 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           whileHover={reduce ? undefined : { y: -3 }}
-          className="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-white shadow-[0_16px_40px_-10px_rgba(119,61,189,0.85)] md:bottom-6 md:right-6 md:px-6 md:py-3.5"
+          className="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-medium text-white shadow-[0_16px_40px_-10px_rgba(119,61,189,0.85)] md:bottom-6 md:right-6 md:px-6 md:py-3.5"
         >
           {!reduce && (
             <span className="relative flex h-2 w-2">

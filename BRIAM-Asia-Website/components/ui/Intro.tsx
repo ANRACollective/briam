@@ -42,11 +42,14 @@ export function Intro() {
           </div>
 
           <div className="relative flex flex-col items-center">
+            {/* Logo image is the centered anchor (fixed width); "Asia" is
+                absolutely positioned so a late-loading font can't re-center
+                the group and cause the horizontal shift on refresh. */}
             <motion.div
               initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14, filter: "blur(6px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-end gap-2"
+              className="relative flex -translate-x-[14px] items-end justify-center md:-translate-x-[18px]"
             >
               <Image
                 src="/images/logo-briam.png"
@@ -56,7 +59,9 @@ export function Intro() {
                 priority
                 className="h-10 w-auto md:h-14"
               />
-              <span className="pb-1 text-xl font-medium text-white md:text-2xl">Asia</span>
+              <span className="pointer-events-none absolute bottom-1 left-full ml-2 whitespace-nowrap text-xl font-medium text-white md:text-2xl">
+                Asia
+              </span>
             </motion.div>
 
             {/* accent line draw */}

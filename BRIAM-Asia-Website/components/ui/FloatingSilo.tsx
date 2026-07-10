@@ -34,9 +34,14 @@ export function FloatingSilo({
       aria-hidden
     >
       <motion.div
-        animate={reduce ? undefined : { y: [0, -14, 0], rotate: [0, 0.6, 0] }}
+        animate={reduce ? undefined : { y: [0, -14, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: floatDelay }}
+        style={{ transformPerspective: 1000 }}
       >
+        <motion.div
+          animate={reduce ? undefined : { rotateY: [-24, 24, -24] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: floatDelay }}
+        >
         <svg viewBox="0 0 420 420" className="h-full w-full drop-shadow-[0_40px_60px_rgba(32,45,53,0.28)]">
           <defs>
             <linearGradient id="siloTop" x1="0" y1="0" x2="1" y2="1">
@@ -100,6 +105,7 @@ export function FloatingSilo({
           {/* accent rim light */}
           <path d="M210 60 L360 140" stroke="#a679e0" strokeWidth="2" opacity="0.5" />
         </svg>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

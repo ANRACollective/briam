@@ -83,7 +83,7 @@ export function Hero() {
               <span className="h-px w-8 bg-accent-400" /> BRIAM Asia · Singapore
             </motion.p>
 
-            <h1 className="font-display text-[clamp(3rem,8vw,5.6rem)] leading-[0.85] tracking-[-0.02em] text-white [text-wrap:balance]">
+            <h1 className="font-display text-[clamp(3rem,8vw,5.6rem)] leading-[0.98] tracking-[-0.02em] text-white [text-wrap:balance]">
               {HEADLINE.map((word, i) => (
                 <span key={i} className="mr-[0.25em] inline-block overflow-hidden align-top">
                   <motion.span

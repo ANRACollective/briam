@@ -24,6 +24,7 @@ export function EngineeringCapabilities() {
     offset: ["start 65%", "end 60%"],
   });
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const dotTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <section id="capabilities" className="relative scroll-mt-24 overflow-hidden bg-cloud py-20 md:py-28">
@@ -48,12 +49,19 @@ export function EngineeringCapabilities() {
         </div>
 
         <div ref={ref} className="relative mx-auto max-w-4xl">
-          {/* central spine */}
+          {/* central spine: fills top→bottom on scroll, led by a glowing dot */}
           <div className="absolute left-4 top-0 h-full w-[3px] bg-ink/15 md:left-1/2 md:-translate-x-1/2">
             <motion.div
               className="absolute left-0 top-0 w-full origin-top bg-gradient-to-b from-accent to-sce"
               style={reduce ? { height: "100%" } : { height: "100%", scaleY: lineScale }}
             />
+            {!reduce && (
+              <motion.span
+                aria-hidden
+                className="absolute left-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-white shadow-[0_0_16px_6px_rgba(166,121,224,0.85)]"
+                style={{ top: dotTop }}
+              />
+            )}
           </div>
 
           <ul className="space-y-10 md:space-y-14">
