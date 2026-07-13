@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { Anton, Poppins } from "next/font/google";
+import localFont from "next/font/local";
+import { Poppins } from "next/font/google";
 import { Intro } from "@/components/ui/Intro";
 import "./globals.css";
 
 // Update this to your production domain (e.g. your Vercel URL) for correct OG/canonical URLs.
 const SITE_URL = "https://briam-asia.vercel.app";
 
-// Anton ≈ Druk Text (heavy condensed display). Swap for licensed Druk .woff2 later.
-const anton = Anton({
+// Druk Text Medium — the licensed brand display face (headings).
+// Exposed on the same --font-anton CSS var the design system already binds to,
+// so no token/component changes are needed downstream.
+const druk = localFont({
+  src: "./fonts/DrukText-Medium.woff2",
   variable: "--font-anton",
-  subsets: ["latin"],
-  weight: "400",
+  weight: "500",
+  style: "normal",
   display: "swap",
 });
 
@@ -99,7 +103,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${anton.variable} ${poppins.variable} h-full`}>
+    <html lang="en" className={`${druk.variable} ${poppins.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-surface text-ink">
         <a
           href="#main-content"

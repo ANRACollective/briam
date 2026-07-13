@@ -18,7 +18,7 @@
   --color-line: #c1c2c4; /* Border */
   --color-muted: #6b727a;
 
-  /* Fonts (Anton ≈ Druk Text, Poppins ≈ Galano Grotesque) */
+  /* Fonts (--font-anton = Druk Text Medium, Poppins ≈ Galano Grotesque) */
   --font-heading: var(--font-anton), "Arial Narrow", sans-serif;
   --font-body: var(--font-poppins), system-ui, sans-serif;
 
