@@ -53,6 +53,18 @@ body {
   overflow-x: hidden;
 }
 
+/* Dot-grid matrix (Figma "Pattern1") — light dots on dark sections.
+   40px pitch, ~1.1px dots, subtle white so it reads as texture not noise. */
+.bg-dot-grid {
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.09) 1.1px,
+    transparent 1.6px
+  );
+  background-size: 40px 40px;
+  background-position: 0 0;
+}
+
 /* Condensed display headings — mimic Druk Text's tight metrics */
 .font-display {
   font-family: var(--font-heading);

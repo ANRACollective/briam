@@ -3,7 +3,6 @@
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Section";
 import { motion } from "motion/react";
-import Image from "next/image";
 
 const TILES = [
   { title: "Industrial buildings", sub: "Warehouses, factories, facilities" },
@@ -15,12 +14,11 @@ const TILES = [
 export function SteelAlliance() {
   return (
     <section className="relative scroll-mt-24 overflow-hidden bg-ink py-20 text-white md:py-28">
-      {/* steel-structure texture + ambient glows */}
+      {/* Figma "Pattern1" — dot-grid matrix behind the content, plus faint depth glows */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <Image src="/images/steel-structure.jpg" alt="" fill className="object-cover opacity-[0.12]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/60" />
-        <div className="absolute -right-40 top-0 h-[420px] w-[420px] rounded-full bg-accent/20 blur-[130px]" />
-        <div className="absolute -left-40 bottom-0 h-[360px] w-[360px] rounded-full bg-sce/15 blur-[130px]" />
+        <div className="absolute inset-0 bg-dot-grid" />
+        <div className="absolute -right-40 top-0 h-[420px] w-[420px] rounded-full bg-accent/12 blur-[140px]" />
+        <div className="absolute -left-40 bottom-0 h-[360px] w-[360px] rounded-full bg-sce/10 blur-[140px]" />
       </div>
 
       <Container className="relative">
