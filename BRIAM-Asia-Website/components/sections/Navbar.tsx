@@ -132,7 +132,7 @@ export function Navbar() {
         aria-label="Primary"
       >
         <a href="#home" className="flex flex-1 items-center gap-2" aria-label="BRIAM Asia, home">
-          <Image src="/images/logo-briam-dark.png" alt="BRIAM" width={120} height={38} priority className="h-8 w-auto" />
+          <Image src="/images/logo-briam-dark.png" alt="BRIAM" width={1200} height={382} priority className="h-8 w-auto" />
           <span className="text-lg font-medium text-ink">Asia</span>
         </a>
 

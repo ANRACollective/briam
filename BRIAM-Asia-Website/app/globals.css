@@ -54,14 +54,14 @@ body {
 }
 
 /* Dot-grid matrix (Figma "Pattern1") — light dots on dark sections.
-   40px pitch, ~1.1px dots, subtle white so it reads as texture not noise. */
+   44px pitch, ~2px dots, clearer white so the texture reads plainly. */
 .bg-dot-grid {
   background-image: radial-gradient(
     circle at center,
-    rgba(255, 255, 255, 0.09) 1.1px,
-    transparent 1.6px
+    rgba(255, 255, 255, 0.16) 2px,
+    transparent 2.5px
   );
-  background-size: 40px 40px;
+  background-size: 44px 44px;
   background-position: 0 0;
 }
 
