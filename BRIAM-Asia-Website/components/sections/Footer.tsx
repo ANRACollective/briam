@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 
 /** Primary footer navigation (Druk display links). */
@@ -41,9 +40,8 @@ function OutArrow() {
   );
 }
 
+// Utility zone: no entrance animation (boss sticky), hover transitions only.
 export function Footer() {
-  const reduce = useReducedMotion();
-
   return (
     <footer className="relative overflow-hidden bg-ink text-white">
       {/* soft ambient depth */}
@@ -127,14 +125,7 @@ export function Footer() {
               Cookies Policy
             </a>
           </div>
-          <motion.p
-            initial={reduce ? false : { opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            © {new Date().getFullYear()} BRIAM. All rights reserved.
-          </motion.p>
+          <p>© {new Date().getFullYear()} BRIAM. All rights reserved.</p>
         </div>
       </Container>
     </footer>

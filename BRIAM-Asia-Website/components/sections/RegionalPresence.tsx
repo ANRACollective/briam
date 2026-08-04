@@ -34,8 +34,9 @@ const ITEMS = [
   },
   {
     icon: <><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z" {...S} /><path d="M9 12l2 2 4-4" {...S} /></>,
-    title: "European compliance",
-    body: "Engineering standards aligned with EU norms and certifications.",
+    // Boss comment #10: compliance framed around each market's own rules
+    title: "Building-norm compliance",
+    body: "European-grade engineering, certified to each country's building norms.",
   },
 ];
 
@@ -84,16 +85,25 @@ export function RegionalPresence() {
             {ITEMS.map((item, i) => (
               <motion.li
                 key={item.title}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 26 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="group flex items-start gap-5 rounded-lg border border-line/60 bg-white p-5 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-28px_rgba(119,61,189,0.6)]"
+                className="group relative flex items-start gap-5 overflow-hidden rounded-lg border border-line/60 bg-white p-5 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-28px_rgba(119,61,189,0.6)]"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+                {/* soft radial purple glow on hover (motion sticky) */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{
+                    background:
+                      "radial-gradient(280px circle at 18% 30%, rgba(119,61,189,0.10), transparent 70%)",
+                  }}
+                />
+                <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
                   <Icon path={item.icon} />
                 </span>
-                <div>
+                <div className="relative">
                   <h3 className="font-display text-2xl uppercase leading-none tracking-[-0.02em] text-ink">
                     {item.title}
                   </h3>

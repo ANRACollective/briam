@@ -42,6 +42,9 @@ export function SteelAlliance() {
           </p>
         </div>
 
+        {/* Readability pass (boss comment #4): larger Druk titles, clearer subs,
+            left-aligned, glassier tiles per Figma. Hover = soft radial purple
+            glow (motion sticky), subtle and non-distracting. */}
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {TILES.map((tile, i) => (
             <motion.div
@@ -50,12 +53,21 @@ export function SteelAlliance() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group rounded-md border border-white/10 bg-white/[0.06] p-6 text-center backdrop-blur-sm transition-all duration-300 hover:border-accent-400/60 hover:bg-white/[0.1]"
+              className="group relative overflow-hidden rounded-md border border-white/15 bg-white/[0.08] p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent-400/60 hover:bg-white/[0.12]"
             >
-              <h3 className="font-display text-[2rem] uppercase leading-[0.85] tracking-[-0.02em] text-white transition-colors group-hover:text-accent-400">
+              {/* radial glow, revealed on hover */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                style={{
+                  background:
+                    "radial-gradient(240px circle at 30% 20%, rgba(119,61,189,0.28), transparent 70%)",
+                }}
+              />
+              <h3 className="font-display relative text-[2.5rem] uppercase leading-[0.85] tracking-[-0.02em] text-white transition-colors group-hover:text-accent-400">
                 {tile.title}
               </h3>
-              <p className="mt-3 text-white/70">{tile.sub}</p>
+              <p className="relative mt-4 text-lg leading-snug text-white/85">{tile.sub}</p>
             </motion.div>
           ))}
         </div>

@@ -20,7 +20,13 @@ export function LeadGen() {
   return (
     <section className="scroll-mt-24 bg-cloud py-12 md:py-16">
       <Container>
-        <div className="relative overflow-hidden rounded-lg bg-ink px-6 py-14 md:px-16">
+        {/* One fade+rise entrance for the whole banner (once per session). */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="relative overflow-hidden rounded-lg bg-ink px-6 py-14 md:px-16">
           {/* animated sheen + glow */}
           <div aria-hidden className="pointer-events-none absolute inset-0">
             <div className="absolute -left-24 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-accent/25 blur-[120px]" />
@@ -35,15 +41,9 @@ export function LeadGen() {
           </div>
 
           <div className="relative mx-auto max-w-3xl text-center">
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="type-h2 text-white"
-            >
+            <h2 className="type-h2 text-white">
               Get the full SCE RD Steel Alliance capability deck.
-            </motion.h2>
+            </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg text-white/70">
               Detailed capability overview, project references, and technical
               specifications — delivered to your inbox.
@@ -90,7 +90,7 @@ export function LeadGen() {
               </motion.p>
             )}
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

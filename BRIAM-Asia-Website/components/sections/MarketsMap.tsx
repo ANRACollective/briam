@@ -3,43 +3,58 @@
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
-import { seaMap } from "@/lib/seaMap";
+import { apacMap } from "@/lib/apacMap";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useState } from "react";
 
-type Meta = { img: string; note: string; dx: number; dy: number };
-// dx/dy offset the floating card into open sea space; a dashed line tethers it
-// back to the pin on the country (values are in the 1000×820 map viewBox).
-const META: Record<string, Meta> = {
-  Myanmar: { img: "/images/city-myanmar.jpg", note: "Yangon", dx: -24, dy: -95 },
-  Thailand: { img: "/images/city-skyline.jpg", note: "Bangkok", dx: -135, dy: 3 },
-  Cambodia: { img: "/images/city-oldtown-2.jpg", note: "Phnom Penh", dx: -129, dy: 85 },
-  Vietnam: { img: "/images/city-oldtown.jpg", note: "Ho Chi Minh City", dx: 105, dy: -55 },
-  Singapore: { img: "/images/city-singapore-2.jpg", note: "Regional HQ", dx: -118, dy: 82 },
-  Malaysia: { img: "/images/city-kl.jpg", note: "Kuala Lumpur", dx: 230, dy: 44 },
-  Indonesia: { img: "/images/city-skyline-2.jpg", note: "Jakarta", dx: 127, dy: 100 },
-  Philippines: { img: "/images/city-nightmarket.jpg", note: "Manila", dx: 151, dy: -32 },
-};
+// One entry per market. `note` is the key city / descriptor shown on the card.
+// Card images exported from the Figma "Markets served" grid.
+type Market = { name: string; img: string; note: string };
 
-const [VBW, VBH] = seaMap.viewBox.split(" ").slice(2).map(Number);
-const pct = (v: number, total: number) => `${(v / total) * 100}%`;
-const markets = seaMap.countries.filter((c) => c.highlight && META[c.name]);
+const MARKETS: Market[] = [
+  { name: "Singapore", img: "/images/markets/singapore.jpg", note: "Regional HQ" },
+  { name: "Malaysia", img: "/images/markets/malaysia.jpg", note: "Kuala Lumpur" },
+  { name: "Thailand", img: "/images/markets/thailand.jpg", note: "Bangkok" },
+  { name: "Vietnam", img: "/images/markets/vietnam.jpg", note: "Ho Chi Minh City" },
+  { name: "Cambodia", img: "/images/markets/cambodia.jpg", note: "Phnom Penh" },
+  { name: "Myanmar", img: "/images/markets/myanmar.jpg", note: "Yangon" },
+  { name: "Laos", img: "/images/markets/laos.jpg", note: "Vientiane" },
+  { name: "Brunei", img: "/images/markets/brunei.jpg", note: "Bandar Seri Begawan" },
+  { name: "Indonesia", img: "/images/markets/indonesia.jpg", note: "Jakarta" },
+  { name: "Philippines", img: "/images/markets/philippines.jpg", note: "Manila" },
+  { name: "Australia", img: "/images/markets/australia.jpg", note: "Sydney" },
+  { name: "New Zealand", img: "/images/markets/new-zealand.jpg", note: "Auckland" },
+  { name: "Pacific Islands", img: "/images/markets/pacific-islands.jpg", note: "Fiji & Oceania" },
+  { name: "India", img: "/images/markets/india.jpg", note: "New Delhi" },
+  { name: "Pakistan", img: "/images/markets/pakistan.jpg", note: "Lahore" },
+  { name: "Bangladesh", img: "/images/markets/bangladesh.jpg", note: "Dhaka" },
+  { name: "Nepal", img: "/images/markets/nepal.jpg", note: "Kathmandu" },
+  { name: "Bhutan", img: "/images/markets/bhutan.jpg", note: "Thimphu" },
+  { name: "Maldives", img: "/images/markets/maldives.jpg", note: "Malé" },
+  { name: "Sri Lanka", img: "/images/markets/sri-lanka.jpg", note: "Colombo" },
+];
+
+const [VBX, VBY, VBW, VBH] = apacMap.viewBox.split(" ").map(Number);
+const pctX = (x: number) => `${((x - VBX) / VBW) * 100}%`;
+const pctY = (y: number) => `${((y - VBY) / VBH) * 100}%`;
+
+// Markets whose hover card should open downward (pin sits near the top edge).
+const OPENS_DOWN = new Set(["Pakistan", "India", "Nepal", "Bhutan", "Bangladesh"]);
+// Cards near the right edge anchor right so they stay inside the map.
+const NEAR_RIGHT = new Set(["New Zealand", "Pacific Islands"]);
 
 function Pin({ active }: { active: boolean }) {
   const reduce = useReducedMotion();
-  // staggered ring emission delays for a continuous "sonar" wave
   const rings = [0, 0.8, 1.6];
   return (
     <span className="relative flex h-3 w-3 items-center justify-center">
-      {/* soft ambient glow */}
       <span
         className={cn(
           "absolute rounded-full bg-accent-400 blur-md transition-all duration-300",
           active ? "h-8 w-8 opacity-70" : "h-5 w-5 opacity-40",
         )}
       />
-      {/* emitting waves */}
       {!reduce &&
         rings.map((d, i) => (
           <motion.span
@@ -50,7 +65,6 @@ function Pin({ active }: { active: boolean }) {
             transition={{ duration: active ? 1.8 : 2.4, repeat: Infinity, ease: "easeOut", delay: d }}
           />
         ))}
-      {/* twinkling core */}
       <motion.span
         className={cn("relative h-3 w-3 rounded-full border-2 border-white", active ? "bg-white" : "bg-accent-400")}
         animate={
@@ -70,25 +84,24 @@ function Pin({ active }: { active: boolean }) {
   );
 }
 
-function CardInner({ name }: { name: string }) {
-  const m = META[name];
+function CardInner({ m }: { m: Market }) {
   return (
     <>
       <div className="relative h-24 w-full">
-        <Image src={m.img} alt={name} fill sizes="230px" className="object-cover" />
+        <Image src={m.img} alt={m.name} fill sizes="230px" className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/75 to-transparent" />
       </div>
       <div className="px-3 py-2">
-        <p className="font-display text-base uppercase leading-none tracking-[-0.01em] text-white">{name}</p>
+        <p className="font-display text-base uppercase leading-none tracking-[-0.01em] text-white">{m.name}</p>
         <p className="mt-1 text-[11px] text-white/60">{m.note}</p>
       </div>
     </>
   );
 }
 
-export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }) {
+export function MarketsMap() {
   const [active, setActive] = useState<string | null>(null);
-  const isCards = variant === "cards";
+  const markets = MARKETS.filter((m) => apacMap.pins[m.name]);
 
   return (
     <section id="markets" className="relative scroll-mt-24 overflow-hidden bg-ink py-20 text-white md:py-28">
@@ -102,20 +115,22 @@ export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }
             Markets served
           </h2>
           <p className="mt-5 text-lg text-white/70">
-            Delivering structural steel and silo projects across eight Southeast
-            Asian markets.
+            Delivering structural steel and silo projects across twenty
+            Asia-Pacific markets — from the Indian subcontinent to the Pacific
+            islands.
           </p>
         </div>
 
-        {/* ---------- Desktop: interactive map ---------- */}
+        {/* ---------- Desktop: interactive Asia-Pacific map ---------- */}
         <div
           className="relative mx-auto hidden w-full max-w-[1160px] lg:block"
           style={{ aspectRatio: `${VBW} / ${VBH}` }}
         >
-          <svg viewBox={seaMap.viewBox} className="absolute inset-0 h-full w-full" aria-hidden>
-            {seaMap.countries.map((c) => {
-              const isMarket = c.highlight && !!META[c.name];
-              const isActive = active === c.name;
+          <svg viewBox={apacMap.viewBox} className="absolute inset-0 h-full w-full" aria-hidden>
+            {apacMap.countries.map((c) => {
+              const isMarket = c.highlight;
+              const isActive =
+                active === c.name || (c.pacific && active === "Pacific Islands");
               return (
                 <path
                   key={c.name}
@@ -129,97 +144,62 @@ export function MarketsMap({ variant = "cards" }: { variant?: "cards" | "pins" }
             })}
           </svg>
 
-          {/* connector lines (cards only) */}
-          {isCards && (
-            <svg viewBox={seaMap.viewBox} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden>
-              {markets.map((c) => {
-                const m = META[c.name];
-                return (
-                  <line
-                    key={c.name}
-                    x1={c.cx} y1={c.cy} x2={c.cx + m.dx} y2={c.cy + m.dy}
-                    stroke={active === c.name ? "rgba(166,121,224,0.95)" : "rgba(166,121,224,0.45)"}
-                    strokeWidth="1" strokeDasharray="3 3"
-                  />
-                );
-              })}
-            </svg>
-          )}
-
-          {/* pins + interaction */}
-          {markets.map((c) => (
-            <div
-              key={`pin-${c.name}`}
-              className={cn(
-                "absolute -translate-x-1/2 -translate-y-1/2",
-                // active pin sits above all others so its card fully covers nearby dots
-                active === c.name ? "z-50" : "z-10",
-              )}
-              style={{ left: pct(c.cx, VBW), top: pct(c.cy, VBH) }}
-            >
-              <button
-                className="block cursor-pointer rounded-full"
-                onMouseEnter={() => setActive(c.name)}
-                onMouseLeave={() => setActive((a) => (a === c.name ? null : a))}
-                onFocus={() => setActive(c.name)}
-                onBlur={() => setActive((a) => (a === c.name ? null : a))}
-                aria-label={`${c.name} — ${META[c.name].note}`}
-              >
-                <Pin active={active === c.name} />
-              </button>
-              {/* pins variant: popover card on hover */}
-              {!isCards && active === c.name && (
-                <motion.div
-                  className="absolute left-1/2 z-30 w-[220px] -translate-x-1/2"
-                  style={{ bottom: "calc(50% + 14px)" }}
-                  initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="overflow-hidden rounded-lg border border-white/20 bg-ink shadow-xl">
-                    <CardInner name={c.name} />
-                  </div>
-                </motion.div>
-              )}
-            </div>
-          ))}
-
-          {/* floating cards (cards variant) */}
-          {isCards && markets.map((c, i) => {
-            const m = META[c.name];
+          {/* pins + hover-reveal cards */}
+          {markets.map((m) => {
+            const [px, py] = apacMap.pins[m.name];
+            const down = OPENS_DOWN.has(m.name);
+            const right = NEAR_RIGHT.has(m.name);
             return (
-              <motion.button
-                key={`card-${c.name}`}
-                className="absolute z-20 w-[188px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border border-white/15 bg-ink/80 text-left shadow-xl backdrop-blur-sm focus:z-30"
-                style={{ left: pct(c.cx + m.dx, VBW), top: pct(c.cy + m.dy, VBH) }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -5, scale: 1.05 }}
-                onMouseEnter={() => setActive(c.name)}
-                onMouseLeave={() => setActive((a) => (a === c.name ? null : a))}
-                onFocus={() => setActive(c.name)}
-                onBlur={() => setActive((a) => (a === c.name ? null : a))}
-                aria-label={`${c.name} — ${m.note}`}
+              <div
+                key={`pin-${m.name}`}
+                className={cn(
+                  "absolute -translate-x-1/2 -translate-y-1/2",
+                  active === m.name ? "z-50" : "z-10",
+                )}
+                style={{ left: pctX(px), top: pctY(py) }}
               >
-                <CardInner name={c.name} />
-              </motion.button>
+                <button
+                  className="block cursor-pointer rounded-full"
+                  onMouseEnter={() => setActive(m.name)}
+                  onMouseLeave={() => setActive((a) => (a === m.name ? null : a))}
+                  onFocus={() => setActive(m.name)}
+                  onBlur={() => setActive((a) => (a === m.name ? null : a))}
+                  aria-label={`${m.name} — ${m.note}`}
+                >
+                  <Pin active={active === m.name} />
+                </button>
+                {active === m.name && (
+                  <motion.div
+                    className={cn(
+                      "absolute z-30 w-[220px]",
+                      right ? "right-0" : "left-1/2 -translate-x-1/2",
+                    )}
+                    style={down ? { top: "calc(50% + 14px)" } : { bottom: "calc(50% + 14px)" }}
+                    initial={{ opacity: 0, y: down ? -8 : 8, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="overflow-hidden rounded-lg border border-white/20 bg-ink shadow-xl">
+                      <CardInner m={m} />
+                    </div>
+                  </motion.div>
+                )}
+              </div>
             );
           })}
         </div>
 
         {/* ---------- Mobile: clean grid ---------- */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:hidden">
-          {markets.map((c) => (
-            <div key={`m-${c.name}`} className="overflow-hidden rounded-lg border border-white/12 bg-white/[0.04]">
+          {MARKETS.map((m) => (
+            <div key={`m-${m.name}`} className="overflow-hidden rounded-lg border border-white/12 bg-white/[0.04]">
               <div className="relative h-24 w-full">
-                <Image src={META[c.name].img} alt={c.name} fill sizes="200px" className="object-cover" />
+                <Image src={m.img} alt={m.name} fill sizes="200px" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent" />
               </div>
               <div className="px-3 py-2">
-                <p className="font-display text-lg uppercase leading-none tracking-[-0.01em]">{c.name}</p>
-                <p className="mt-1 text-[11px] text-white/60">{META[c.name].note}</p>
+                <p className="font-display text-lg uppercase leading-none tracking-[-0.01em]">{m.name}</p>
+                <p className="mt-1 text-[11px] text-white/60">{m.note}</p>
               </div>
             </div>
           ))}

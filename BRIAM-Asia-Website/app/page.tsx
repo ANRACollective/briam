@@ -50,7 +50,7 @@ export default function Home() {
         <SteelAlliance />
         <Stats />
         <RegionalPresence />
-        <MarketsMap variant="pins" />
+        <MarketsMap />
         <LeadGen />
         <Projects />
         <ContactForm />

@@ -124,9 +124,11 @@ export function Navbar() {
           : "bg-cloud/95",
       )}
     >
+      {/* Logo sits flush against the viewport's left edge (boss request);
+          the rest of the bar keeps the regular right-hand gutter. */}
       <nav
         className={cn(
-          "mx-auto flex max-w-[2100px] items-center gap-8 px-6 transition-all duration-300 md:px-10 lg:px-16 xl:px-24",
+          "flex w-full items-center gap-8 pl-0 pr-6 transition-all duration-300 md:pr-10 lg:pr-16 xl:pr-24",
           scrolled ? "h-[60px]" : "h-[72px]",
         )}
         aria-label="Primary"
@@ -147,12 +149,18 @@ export function Navbar() {
                     href={link.href}
                     aria-current={activeLink ? "true" : undefined}
                     className={cn(
-                      "relative text-[17px] font-medium transition-colors hover:text-accent",
+                      "group relative text-[17px] font-medium transition-colors duration-150 ease-out hover:text-accent",
                       activeLink ? "text-accent" : "text-ink",
                     )}
                   >
                     {link.label}
-                    <span className={cn("absolute -bottom-1.5 left-0 h-0.5 bg-accent transition-all duration-300", activeLink ? "w-full" : "w-0")} />
+                    {/* underline: full when active, draws left→right on hover */}
+                    <span
+                      className={cn(
+                        "absolute -bottom-1.5 left-0 h-0.5 w-full origin-left bg-accent transition-transform duration-150 ease-out",
+                        activeLink ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+                      )}
+                    />
                   </a>
                 </li>
               );
@@ -172,13 +180,18 @@ export function Navbar() {
                   aria-controls="solutions-menu"
                   onClick={() => setSolutionsOpen((v) => !v)}
                   className={cn(
-                    "relative flex items-center gap-1 text-[17px] font-medium transition-colors hover:text-accent",
+                    "group relative flex items-center gap-1 text-[17px] font-medium transition-colors duration-150 ease-out hover:text-accent",
                     activeLink ? "text-accent" : "text-ink",
                   )}
                 >
                   {link.label}
                   <Chevron className={cn("transition-transform duration-300", solutionsOpen && "rotate-180")} />
-                  <span className={cn("absolute -bottom-1.5 left-0 h-0.5 bg-accent transition-all duration-300", activeLink ? "w-[calc(100%-22px)]" : "w-0")} />
+                  <span
+                    className={cn(
+                      "absolute -bottom-1.5 left-0 h-0.5 w-[calc(100%-22px)] origin-left bg-accent transition-transform duration-150 ease-out",
+                      activeLink ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+                    )}
+                  />
                 </button>
                 <AnimatePresence>
                   {solutionsOpen && (

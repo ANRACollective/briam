@@ -5,21 +5,23 @@ import { Eyebrow } from "@/components/ui/Section";
 import { motion } from "motion/react";
 import Image from "next/image";
 
+// Copy is deliberately static custom text, not CMS-dynamic (boss comment #7).
+// Images exported from the updated Figma "Featured projects" cards.
 const PROJECTS = [
   {
     title: "Multi-story parking building",
     meta: "12 × 5,000T silos • SCE / BRIAM • Vietnam",
-    img: "/images/steel-structure.jpg",
+    img: "/images/project-parking.jpg",
   },
   {
     title: "Large warehouse project",
     meta: "8 × 2,000T silos • Silbloxx • Thailand",
-    img: "/images/steel-silo.jpg",
+    img: "/images/project-warehouse.jpg",
   },
   {
     title: "Full-scope flour mill",
     meta: "4 × 1,500T flat-bottom • Turnkey • Indonesia",
-    img: "/images/engineering-ductwork.jpg",
+    img: "/images/project-flourmill.jpg",
   },
 ];
 

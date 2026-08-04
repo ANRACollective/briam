@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Eyebrow } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
@@ -42,13 +42,15 @@ export function SplitFeature({
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
   const left = imageSide === "left";
 
+  // Split fade-in (boss note): text slides in from the left, image from the
+  // right, offset ~150ms — both once per session.
   const text = (
     <div className="flex flex-col justify-center px-6 py-14 md:px-10 lg:px-16 lg:py-28 xl:px-24">
       <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={reduce ? false : { opacity: 0, x: -56 }}
+        whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         className={cn("w-full max-w-[600px]", left && "lg:ml-auto")}
       >
         {eyebrow && <Eyebrow className="mb-5">{eyebrow}</Eyebrow>}
@@ -60,9 +62,9 @@ export function SplitFeature({
         </div>
         {cta && (
           <div className="mt-8">
-            <Button href={cta.href} variant="accent">
+            <ArrowLink href={cta.href} className="text-base">
               {cta.label}
-            </Button>
+            </ArrowLink>
           </div>
         )}
       </motion.div>
@@ -76,28 +78,25 @@ export function SplitFeature({
     >
       <motion.div
         className="absolute inset-0"
-        style={reduce ? undefined : { y, scale: 1.12 }}
+        initial={reduce ? false : { opacity: 0, x: left ? -56 : 56 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.75, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
       >
-        <Image
-          src={image}
-          alt={imageAlt}
-          fill
-          sizes="(max-width: 1024px) 100vw, 55vw"
-          className="object-cover"
-        />
-      </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/25 to-transparent" />
-      {/* Clip-reveal wipe */}
-      {!reduce && (
         <motion.div
-          className="absolute inset-0 z-10 bg-cloud"
-          initial={{ scaleY: 1 }}
-          whileInView={{ scaleY: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-          style={{ originY: 0 }}
-        />
-      )}
+          className="absolute inset-0"
+          style={reduce ? undefined : { y, scale: 1.12 }}
+        >
+          <Image
+            src={image}
+            alt={imageAlt}
+            fill
+            sizes="(max-width: 1024px) 100vw, 55vw"
+            className="object-cover"
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/25 to-transparent" />
+      </motion.div>
     </div>
   );
 

@@ -3,7 +3,7 @@
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Section";
 import { STEP_ICONS } from "@/components/ui/icons";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
 
@@ -16,20 +16,15 @@ const STEPS = [
   { n: "06", title: "Maintenance & Service", body: "Post-installation inspection, parts supply, and technical support." },
 ];
 
+// Once-per-session staggered reveal (boss note): the card fades + rises a
+// single time; the step icon/number pops in first, the label follows.
 function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number; reduce: boolean }) {
   const left = i % 2 === 0;
   const Icon = STEP_ICONS[i];
-  const liRef = useRef<HTMLLIElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: liRef,
-    offset: ["start end", "center 55%"],
-  });
-  const xRaw = useTransform(scrollYProgress, [0, 1], [left ? -120 : 120, 0]);
-  const x = useSpring(xRaw, { stiffness: 55, damping: 18, mass: 0.6 });
-  const opacity = useTransform(scrollYProgress, [0, 0.45], [0, 1]);
+  const ease = [0.22, 1, 0.36, 1] as const;
 
   return (
-    <li ref={liRef} className="relative">
+    <li className="relative">
       <span className="absolute left-4 top-8 z-10 flex h-4 w-4 -translate-x-1/2 items-center justify-center md:left-1/2">
         <span className="h-4 w-4 rounded-full border-2 border-accent bg-ink" />
         <motion.span
@@ -42,18 +37,36 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
       </span>
 
       <motion.div
-        style={reduce ? undefined : { x, opacity }}
+        initial={reduce ? false : { opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.65, delay: 0.05, ease }}
         className={`ml-14 text-center md:ml-0 md:w-[calc(50%-3rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
       >
         <div className="group rounded-xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:bg-white/[0.09] hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.7)] md:p-10">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/15 text-accent-400 transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+          {/* number/icon pops first… */}
+          <motion.span
+            initial={reduce ? false : { opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.5, delay: 0.12, type: "spring", stiffness: 260, damping: 18 }}
+            className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/15 text-accent-400 transition-colors duration-300 group-hover:bg-accent group-hover:text-white"
+          >
             <Icon className="h-7 w-7" />
-          </span>
-          <span className="font-display mt-6 block text-sm uppercase tracking-[0.2em] text-accent-400">
-            Step {step.n}
-          </span>
-          <h3 className="type-h4 mt-3 text-white">{step.title}</h3>
-          <p className="mt-4 text-[15px] leading-relaxed text-white/65">{step.body}</p>
+          </motion.span>
+          {/* …label follows */}
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.55, delay: 0.28, ease }}
+          >
+            <span className="font-display mt-6 block text-sm uppercase tracking-[0.2em] text-accent-400">
+              Step {step.n}
+            </span>
+            <h3 className="type-h4 mt-3 text-white">{step.title}</h3>
+            <p className="mt-4 text-[15px] leading-relaxed text-white/65">{step.body}</p>
+          </motion.div>
         </div>
       </motion.div>
     </li>
