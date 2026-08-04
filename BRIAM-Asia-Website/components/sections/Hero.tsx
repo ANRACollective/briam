@@ -1,7 +1,7 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { MagneticButton } from "@/components/ui/MagneticButton";
+import { Button } from "@/components/ui/Button";
 import {
   motion,
   useReducedMotion,
@@ -117,9 +117,9 @@ export function Hero() {
                 in Singapore. Built for Southeast Asia.
               </p>
               <div className="mt-8">
-                <MagneticButton href="#contact" variant="accent" className="px-8 py-4 text-base md:text-lg">
+                <Button href="#contact" variant="accent" className="px-8 py-4 text-base md:text-lg">
                   Get in Touch
-                </MagneticButton>
+                </Button>
               </div>
             </div>
           </motion.div>

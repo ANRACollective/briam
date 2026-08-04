@@ -174,10 +174,11 @@ export function Gateways() {
                   <div className="absolute bottom-5 left-5 w-[min(380px,calc(100%-2.5rem))] bg-white p-5 shadow-[0_24px_60px_-24px_rgba(32,45,53,0.6)]">
                     <div className="flex items-center justify-between gap-3">
                       {p.wordmark}
+                      {/* Standard static button — no animation (boss note) */}
                       <a
                         href="#contact"
                         aria-label={`${p.heading} — get in touch`}
-                        className="flex h-8 w-8 shrink-0 items-center justify-center bg-accent text-white transition-transform duration-300 hover:rotate-45"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center bg-accent text-white hover:bg-accent-600"
                       >
                         <ArrowOut />
                       </a>
@@ -238,7 +239,7 @@ export function Gateways() {
                           <a
                             href="#contact"
                             aria-label={`${p.heading} — get in touch`}
-                            className="flex h-8 w-8 shrink-0 items-center justify-center bg-accent text-white"
+                            className="flex h-8 w-8 shrink-0 items-center justify-center bg-accent text-white hover:bg-accent-600"
                           >
                             <ArrowOut />
                           </a>

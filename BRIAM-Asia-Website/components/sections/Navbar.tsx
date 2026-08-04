@@ -1,6 +1,6 @@
 "use client";
 
-import { MagneticButton } from "@/components/ui/MagneticButton";
+import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { useActiveSection } from "@/lib/useActiveSection";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -133,9 +133,10 @@ export function Navbar() {
         )}
         aria-label="Primary"
       >
-        <a href="#home" className="flex flex-1 items-center gap-2" aria-label="BRIAM Asia, home">
-          <Image src="/images/logo-briam-dark.png" alt="BRIAM" width={1200} height={382} priority className="h-8 w-auto" />
-          <span className="text-lg font-medium text-ink">Asia</span>
+        {/* Logo: flush into the corner, larger/bolder per boss feedback */}
+        <a href="#home" className="flex flex-1 items-center gap-2.5" aria-label="BRIAM Asia, home">
+          <Image src="/images/logo-briam-dark.png" alt="BRIAM" width={1200} height={382} priority className="h-10 w-auto lg:h-11" />
+          <span className="text-xl font-medium text-ink">Asia</span>
         </a>
 
         {/* Desktop nav */}
@@ -263,9 +264,9 @@ export function Navbar() {
               )}
             </AnimatePresence>
           </div>
-          <MagneticButton href="#contact" variant="accent" className="px-5 py-3">
+          <Button href="#contact" variant="accent" className="px-5 py-3">
             Get in Touch
-          </MagneticButton>
+          </Button>
         </div>
 
         {/* Mobile toggle */}

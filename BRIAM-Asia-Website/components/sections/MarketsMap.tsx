@@ -123,7 +123,8 @@ export function MarketsMap() {
         <div className="absolute left-1/2 top-1/3 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-accent/10 blur-[150px]" />
       </div>
       <Container className="relative">
-        <div className="mb-10 max-w-2xl md:mb-14">
+        {/* Mobile heading (desktop heading lives in the 3-column grid below) */}
+        <div className="mb-10 max-w-2xl lg:hidden">
           <Eyebrow tone="light" className="mb-5">Coverage</Eyebrow>
           <h2 className="type-h2">
             Markets served
@@ -135,8 +136,18 @@ export function MarketsMap() {
           </p>
         </div>
 
-        {/* ---------- Desktop: map + region list ---------- */}
-        <div className="hidden grid-cols-[minmax(0,1fr)_260px] gap-10 lg:grid xl:grid-cols-[minmax(0,1fr)_300px]">
+        {/* ---------- Desktop: heading | map | regions (3 columns) ---------- */}
+        <div className="hidden grid-cols-[230px_minmax(0,1fr)_230px] items-center gap-10 lg:grid xl:grid-cols-[260px_minmax(0,1fr)_270px]">
+          <div className="self-center">
+            <Eyebrow tone="light" className="mb-5">Coverage</Eyebrow>
+            <h2 className="type-h2">
+              Markets served
+            </h2>
+            <p className="mt-5 text-base text-white/70">
+              Structural steel and silo projects across twenty Asia-Pacific
+              markets — from the Indian subcontinent to the Pacific islands.
+            </p>
+          </div>
           <div className="relative w-full" style={{ aspectRatio: `${VBW} / ${VBH}` }}>
             <svg viewBox={apacMap.viewBox} className="absolute inset-0 h-full w-full" aria-hidden>
               {apacMap.countries.map((c) => {
@@ -149,9 +160,9 @@ export function MarketsMap() {
                     className={cn("transition-all duration-300", c.highlight && "cursor-pointer")}
                     fill={
                       isActive
-                        ? "#9a5ce6"
+                        ? "var(--color-accent-600)"
                         : c.highlight
-                          ? "#773DBD"
+                          ? "var(--color-accent)"
                           : "rgba(255,255,255,0.05)"
                     }
                     stroke={c.highlight ? "rgba(196,160,240,0.85)" : "rgba(255,255,255,0.12)"}

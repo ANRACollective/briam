@@ -2,7 +2,6 @@
 
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Section";
-import { STEP_ICONS } from "@/components/ui/icons";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
@@ -16,11 +15,10 @@ const STEPS = [
   { n: "06", title: "Maintenance & Service", body: "Post-installation inspection, parts supply, and technical support." },
 ];
 
-// Once-per-session staggered reveal (boss note): the card fades + rises a
-// single time; the step icon/number pops in first, the label follows.
+// Once-per-session staggered reveal. Figma layout (boss note): no icon, no
+// "Step" word — just the big purple number, a larger Druk title, then body.
 function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number; reduce: boolean }) {
   const left = i % 2 === 0;
-  const Icon = STEP_ICONS[i];
   const ease = [0.22, 1, 0.36, 1] as const;
 
   return (
@@ -41,31 +39,28 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.65, delay: 0.05, ease }}
-        className={`ml-14 text-center md:ml-0 md:w-[calc(50%-3rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
+        className={`ml-14 text-left md:ml-0 md:w-[calc(50%-3rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
       >
         <div className="group rounded-xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:bg-white/[0.09] hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.7)] md:p-10">
-          {/* number/icon pops first… */}
+          {/* number pops first… */}
           <motion.span
-            initial={reduce ? false : { opacity: 0, scale: 0.5 }}
+            initial={reduce ? false : { opacity: 0, scale: 0.6 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.5, delay: 0.12, type: "spring", stiffness: 260, damping: 18 }}
-            className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/15 text-accent-400 transition-colors duration-300 group-hover:bg-accent group-hover:text-white"
+            className="font-display block text-[3.5rem] leading-none text-accent-400 md:text-[4rem]"
           >
-            <Icon className="h-7 w-7" />
+            {step.n}
           </motion.span>
-          {/* …label follows */}
+          {/* …title + body follow */}
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.55, delay: 0.28, ease }}
           >
-            <span className="font-display mt-6 block text-sm uppercase tracking-[0.2em] text-accent-400">
-              Step {step.n}
-            </span>
-            <h3 className="type-h4 mt-3 text-white">{step.title}</h3>
-            <p className="mt-4 text-[15px] leading-relaxed text-white/65">{step.body}</p>
+            <h3 className="type-h3 mt-4 text-white">{step.title}</h3>
+            <p className="mt-4 text-base leading-relaxed text-white/70">{step.body}</p>
           </motion.div>
         </div>
       </motion.div>

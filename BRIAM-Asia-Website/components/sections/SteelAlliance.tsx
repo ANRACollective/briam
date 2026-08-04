@@ -11,6 +11,55 @@ const TILES = [
   { title: "Turnkey delivery", sub: "Design, supply, and installation" },
 ];
 
+// Second row per the Figma design (boss: bottom boxes were missing).
+const TILES_ROW2 = [
+  { title: "Industrial buildings", sub: "Warehouses, factories, facilities" },
+  { title: "Steel fabrication", sub: "Custom engineering to spec" },
+  { title: "Turnkey delivery", sub: "Design, supply, and installation" },
+];
+
+function Tile({
+  tile,
+  i,
+  compact = false,
+}: {
+  tile: { title: string; sub: string };
+  i: number;
+  compact?: boolean;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative overflow-hidden rounded-md border border-white/15 bg-white/[0.08] p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent-400/60 hover:bg-white/[0.12]"
+    >
+      {/* radial glow, revealed on hover */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(240px circle at 30% 20%, rgba(119,61,189,0.28), transparent 70%)",
+        }}
+      />
+      <h3
+        className={
+          compact
+            ? "font-display relative text-[1.75rem] uppercase leading-[0.9] tracking-[-0.02em] text-white transition-colors group-hover:text-accent-400"
+            : "font-display relative text-[2.5rem] uppercase leading-[0.85] tracking-[-0.02em] text-white transition-colors group-hover:text-accent-400"
+        }
+      >
+        {tile.title}
+      </h3>
+      <p className={compact ? "relative mt-2 text-base leading-snug text-white/85" : "relative mt-4 text-lg leading-snug text-white/85"}>
+        {tile.sub}
+      </p>
+    </motion.div>
+  );
+}
+
 export function SteelAlliance() {
   return (
     <section className="relative scroll-mt-24 overflow-hidden bg-ink py-20 text-white md:py-28">
@@ -47,28 +96,14 @@ export function SteelAlliance() {
             glow (motion sticky), subtle and non-distracting. */}
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {TILES.map((tile, i) => (
-            <motion.div
-              key={tile.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative overflow-hidden rounded-md border border-white/15 bg-white/[0.08] p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent-400/60 hover:bg-white/[0.12]"
-            >
-              {/* radial glow, revealed on hover */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                style={{
-                  background:
-                    "radial-gradient(240px circle at 30% 20%, rgba(119,61,189,0.28), transparent 70%)",
-                }}
-              />
-              <h3 className="font-display relative text-[2.5rem] uppercase leading-[0.85] tracking-[-0.02em] text-white transition-colors group-hover:text-accent-400">
-                {tile.title}
-              </h3>
-              <p className="relative mt-4 text-lg leading-snug text-white/85">{tile.sub}</p>
-            </motion.div>
+            <Tile key={`r1-${tile.title}`} tile={tile} i={i} />
+          ))}
+        </div>
+
+        {/* Second row (Figma) — three wider tiles */}
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {TILES_ROW2.map((tile, i) => (
+            <Tile key={`r2-${tile.title}`} tile={tile} i={i} compact />
           ))}
         </div>
       </Container>
