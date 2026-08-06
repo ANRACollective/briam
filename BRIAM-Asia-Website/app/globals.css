@@ -4,17 +4,17 @@
    BRIAM Asia — design tokens (mapped from Figma)
    ------------------------------------------------------------------ */
 @theme {
-  /* Brand colors */
-  --color-ink: #202d35; /* Primary / text */
+  /* ---- Colors — extracted from the Figma file (fills read via MCP) ---- */
+  --color-ink: #202d35; /* Primary / text (Figma text fill) */
   --color-ink-800: #2b3945;
-  --color-accent: #773dbd; /* Purple accent */
+  --color-accent: #773dbd; /* Purple accent (Figma button fill) */
   --color-accent-700: #5f2f99; /* AA-contrast purple for small text on light bg */
-  --color-accent-600: #8a4fd6;
-  --color-accent-400: #a679e0;
+  --color-accent-600: #8a4fd6; /* Hover state */
+  --color-accent-400: #a679e0; /* Light purple for text/accents on dark */
   --color-sce: #66adc8; /* SCE blue */
   --color-silbloxx: #ffdc00; /* Silbloxx yellow */
   --color-surface: #ffffff;
-  --color-cloud: #e0e0e0; /* Background grey */
+  --color-cloud: #e0e0e0; /* Background grey (Figma navbar/section fill) */
   --color-line: #c1c2c4; /* Border */
   --color-muted: #6b727a;
 
@@ -22,13 +22,34 @@
   --font-heading: var(--font-anton), "Arial Narrow", sans-serif;
   --font-body: var(--font-poppins), system-ui, sans-serif;
 
+  /* ---- Type scale — Figma font sizes read per section ---- */
+  --text-display: 4.125rem; /* 66px — hero headline */
+  --text-heading: 3.5rem; /* 56px — section h2 (SteelAlliance, Stats) */
+  --text-tile: 2.5rem; /* 40px — tile/card titles, market names */
+  --text-panel: 1.625rem; /* 26px — accordion panel titles/numbers */
+  --text-lead: 1.5rem; /* 24px — hero sub / section intro copy */
+  --text-label: 1.125rem; /* 18px — tile subtitles */
+  --text-body: 1rem; /* 16px — body copy / card lead */
+  --text-fine: 0.75rem; /* 12px — card small copy */
+
+  /* ---- Layout — Figma frame measurements ---- */
+  --nav-h: 72px; /* Navbar height (Figma 1440×72) */
+  --nav-h-scrolled: 60px;
+  --logo-h: 63px; /* Company Logo instance 190×63, x=0 (flush) */
+  --gutter-section: 80px; /* Desktop frame side gutter (1280 grid on 1440) */
+  --gap-accordion: 12px; /* Gateways panel gap */
+  --panel-collapsed: 160px; /* Gateways collapsed panel width */
+
   /* Radii */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
 
-  /* Easing */
+  /* Motion */
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms; /* link/color transitions */
+  --duration-base: 300ms; /* hover states */
+  --duration-slow: 700ms; /* reveals, accordion expand */
 }
 
 :root {

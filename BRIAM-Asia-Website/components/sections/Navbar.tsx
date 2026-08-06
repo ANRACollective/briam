@@ -112,6 +112,10 @@ export function Navbar() {
   const isActive = (match?: string[]) => (match ? match.includes(active) : false);
   const headerH = scrolled ? 60 : 72;
 
+  // Over the hero the bar is fully transparent (client note) with the white
+  // logo + light links; once scrolled it frosts over with the dark logo.
+  const onDark = !scrolled;
+
   return (
     <motion.header
       initial={reduce ? false : { y: -80 }}
@@ -120,23 +124,30 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-cloud/85 backdrop-blur-md shadow-[0_1px_0_rgba(32,45,53,0.08),0_8px_30px_-12px_rgba(32,45,53,0.25)]"
-          : "bg-cloud/95",
+          ? "bg-cloud shadow-[0_1px_0_rgba(32,45,53,0.08)]" // hard grey, no alpha/blur — matches Figma fill
+          : "bg-transparent",
       )}
     >
-      {/* Logo sits flush against the viewport's left edge (boss request);
+      {/* Logo flush against the viewport's left edge, sized per Figma
+          (190×63 in a 72px bar — the PNGs are trimmed, no internal padding);
           the rest of the bar keeps the regular right-hand gutter. */}
       <nav
         className={cn(
-          "flex w-full items-center gap-8 pl-0 pr-6 transition-all duration-300 md:pr-10 lg:pr-16 xl:pr-24",
+          "flex w-full items-center gap-8 pl-0 pr-6 transition-all duration-300 md:pr-10 lg:pr-16", // 64px right gutter at desktop = Figma spec
           scrolled ? "h-[60px]" : "h-[72px]",
         )}
         aria-label="Primary"
       >
-        {/* Logo: flush into the corner, larger/bolder per boss feedback */}
-        <a href="#home" className="flex flex-1 items-center gap-2.5" aria-label="BRIAM Asia, home">
-          <Image src="/images/logo-briam-dark.png" alt="BRIAM" width={1200} height={382} priority className="h-10 w-auto lg:h-11" />
-          <span className="text-xl font-medium text-ink">Asia</span>
+        <a href="#home" className="flex flex-1 items-center gap-2" aria-label="BRIAM Asia, home">
+          <Image
+            src={onDark ? "/images/logo-briam.png" : "/images/logo-briam-dark.png"}
+            alt="BRIAM"
+            width={1137}
+            height={382}
+            priority
+            className={cn("w-auto transition-all duration-300", scrolled ? "h-[52px]" : "h-[63px]")}
+          />
+          <span className={cn("text-xl font-medium transition-colors duration-300", onDark ? "text-white" : "text-ink")}>Asia</span>
         </a>
 
         {/* Desktop nav */}
@@ -150,8 +161,10 @@ export function Navbar() {
                     href={link.href}
                     aria-current={activeLink ? "true" : undefined}
                     className={cn(
-                      "group relative text-[17px] font-medium transition-colors duration-150 ease-out hover:text-accent",
-                      activeLink ? "text-accent" : "text-ink",
+                      "group relative text-[17px] font-medium transition-colors duration-150 ease-out",
+                      onDark
+                        ? activeLink ? "text-accent-400" : "text-white hover:text-accent-400"
+                        : activeLink ? "text-accent" : "text-ink hover:text-accent",
                     )}
                   >
                     {link.label}
@@ -181,8 +194,10 @@ export function Navbar() {
                   aria-controls="solutions-menu"
                   onClick={() => setSolutionsOpen((v) => !v)}
                   className={cn(
-                    "group relative flex items-center gap-1 text-[17px] font-medium transition-colors duration-150 ease-out hover:text-accent",
-                    activeLink ? "text-accent" : "text-ink",
+                    "group relative flex items-center gap-1 text-[17px] font-medium transition-colors duration-150 ease-out",
+                    onDark
+                      ? activeLink ? "text-accent-400" : "text-white hover:text-accent-400"
+                      : activeLink ? "text-accent" : "text-ink hover:text-accent",
                   )}
                 >
                   {link.label}
@@ -225,11 +240,12 @@ export function Navbar() {
         </ul>
 
         {/* Actions */}
-        <div className="hidden items-center gap-5 border-l border-line pl-5 lg:flex">
+        <div className={cn("hidden items-center gap-5 border-l pl-5 lg:flex", onDark ? "border-white/25" : "border-line")}>
           <div className="relative" ref={langRef}>
+            {/* White pill per Figma (76×30, r4, 8px padding) — same in both nav states */}
             <button
               onClick={() => setLangOpen((v) => !v)}
-              className="flex items-center gap-1.5 rounded-sm px-2 py-1.5 text-sm text-ink transition-colors hover:text-accent"
+              className="flex items-center gap-0.5 rounded-[4px] bg-white px-2 py-1.5 text-sm text-ink transition-colors hover:text-accent"
               aria-expanded={langOpen}
               aria-haspopup="true"
               aria-label={`Language: ${lang}. Change language`}
@@ -273,15 +289,15 @@ export function Navbar() {
         <button
           ref={toggleRef}
           onClick={() => setOpen((v) => !v)}
-          className="ml-auto flex h-10 w-10 items-center justify-center rounded-md text-ink lg:hidden"
+          className={cn("ml-auto flex h-10 w-10 items-center justify-center rounded-md lg:hidden", onDark ? "text-white" : "text-ink")}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls="mobile-drawer"
         >
           <div className="relative h-4 w-6">
-            <span className={cn("absolute left-0 h-0.5 w-6 bg-ink transition-all duration-300", open ? "top-1.5 rotate-45" : "top-0")} />
-            <span className={cn("absolute left-0 top-1.5 h-0.5 w-6 bg-ink transition-all duration-300", open && "opacity-0")} />
-            <span className={cn("absolute left-0 h-0.5 w-6 bg-ink transition-all duration-300", open ? "top-1.5 -rotate-45" : "top-3")} />
+            <span className={cn("absolute left-0 h-0.5 w-6 bg-current transition-all duration-300", open ? "top-1.5 rotate-45" : "top-0")} />
+            <span className={cn("absolute left-0 top-1.5 h-0.5 w-6 bg-current transition-all duration-300", open && "opacity-0")} />
+            <span className={cn("absolute left-0 h-0.5 w-6 bg-current transition-all duration-300", open ? "top-1.5 -rotate-45" : "top-3")} />
           </div>
         </button>
       </nav>
