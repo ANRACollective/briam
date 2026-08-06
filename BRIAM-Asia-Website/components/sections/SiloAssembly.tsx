@@ -1,6 +1,5 @@
 "use client";
 
-import { Eyebrow } from "@/components/ui/Section";
 import {
   motion,
   useReducedMotion,
@@ -99,7 +98,6 @@ export function SiloAssembly() {
           style={reduce ? undefined : { opacity: introOpacity }}
           className="absolute left-1/2 top-[12%] z-10 w-full max-w-2xl -translate-x-1/2 px-6 text-center"
         >
-          <Eyebrow tone="light" className="mb-4 justify-center">The BRIAM System</Eyebrow>
           <h2 className="font-display text-[clamp(2.4rem,5vw,4rem)] uppercase leading-[0.95] tracking-[-0.02em] text-white">
             Assembled block by block
           </h2>

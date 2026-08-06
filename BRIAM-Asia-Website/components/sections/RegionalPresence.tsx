@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Section";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import type { ReactNode } from "react";
@@ -43,10 +42,9 @@ const ITEMS = [
 export function RegionalPresence() {
   const reduce = useReducedMotion();
   return (
-    <section id="regional" className="scroll-mt-24 bg-cloud py-20 md:py-28">
+    <section id="regional" className="scroll-mt-24 bg-cloud section-pad">
       <Container>
         <div className="mb-12 max-w-2xl">
-          <Eyebrow className="mb-5">Regional Presence</Eyebrow>
           <h2 className="type-h2 text-ink">
             Rooted in Singapore, <span className="text-accent">building across the region</span>
           </h2>

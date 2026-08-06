@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 import { motion } from "motion/react";
 import { useState } from "react";
@@ -36,13 +35,12 @@ export function ContactForm() {
   const [accepted, setAccepted] = useState(false);
 
   return (
-    <section id="contact" className="scroll-mt-24 bg-cloud py-20 md:py-28">
+    <section id="contact" className="scroll-mt-24 bg-cloud section-pad">
       <Container>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Left: heading + contact details */}
           <div className="flex flex-col justify-between">
             <div>
-              <Eyebrow className="mb-5">Get in touch</Eyebrow>
               <h2 className="type-h2 text-ink">
                 Contact us
               </h2>

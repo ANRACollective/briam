@@ -2,7 +2,6 @@
 
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 import {
   motion,
@@ -103,7 +102,6 @@ export function Stats() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-10 max-w-xl"
           >
-            <Eyebrow className="mb-5">By the numbers</Eyebrow>
             <h2 className="type-h2 text-ink">
               Engineering capability, delivered across Southeast Asia
             </h2>

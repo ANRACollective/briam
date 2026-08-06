@@ -74,6 +74,22 @@ body {
   overflow-x: hidden;
 }
 
+/* ---- Standard section rhythm (Figma: 80px vertical padding, 1280 grid) ---- */
+.section-pad {
+  padding-block: 3.5rem; /* 56px mobile */
+}
+.section-pad-sm {
+  padding-block: 2rem;
+}
+@media (min-width: 768px) {
+  .section-pad {
+    padding-block: 5rem; /* 80px — Figma section padding */
+  }
+  .section-pad-sm {
+    padding-block: 2.5rem;
+  }
+}
+
 /* Dot-grid matrix (Figma "Pattern1") — light dots on dark sections.
    44px pitch, ~2px dots, clearer white so the texture reads plainly. */
 .bg-dot-grid {

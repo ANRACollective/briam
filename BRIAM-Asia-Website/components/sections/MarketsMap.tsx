@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 import { apacMap } from "@/lib/apacMap";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -118,14 +117,13 @@ export function MarketsMap() {
   const leave = (name: string) => setActive((a) => (a === name ? null : a));
 
   return (
-    <section id="markets" className="relative scroll-mt-24 overflow-hidden bg-ink py-20 text-white md:py-28">
+    <section id="markets" className="relative scroll-mt-24 overflow-hidden bg-ink text-white section-pad">
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/3 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-accent/10 blur-[150px]" />
       </div>
       <Container className="relative">
         {/* Mobile heading (desktop heading lives in the 3-column grid below) */}
         <div className="mb-10 max-w-2xl lg:hidden">
-          <Eyebrow tone="light" className="mb-5">Coverage</Eyebrow>
           <h2 className="type-h2">
             Markets served
           </h2>
@@ -139,7 +137,6 @@ export function MarketsMap() {
         {/* ---------- Desktop: heading | map | regions (3 columns) ---------- */}
         <div className="hidden grid-cols-[230px_minmax(0,1fr)_230px] items-center gap-10 lg:grid xl:grid-cols-[260px_minmax(0,1fr)_270px]">
           <div className="self-center">
-            <Eyebrow tone="light" className="mb-5">Coverage</Eyebrow>
             <h2 className="type-h2">
               Markets served
             </h2>

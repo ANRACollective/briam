@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Section";
 import { motion } from "motion/react";
 import Image from "next/image";
 
@@ -27,10 +26,9 @@ const PROJECTS = [
 
 export function Projects() {
   return (
-    <section id="projects" className="scroll-mt-24 bg-cloud py-20 md:py-28">
+    <section id="projects" className="scroll-mt-24 bg-cloud section-pad">
       <Container wide>
         <div className="mb-12 text-center md:mb-16">
-          <Eyebrow className="mb-5 justify-center">Case studies</Eyebrow>
           <h2 className="type-h2 text-accent">
             Featured projects
           </h2>

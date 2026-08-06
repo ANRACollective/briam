@@ -25,7 +25,6 @@ export default function Home() {
 
         <SplitFeature
           id="solutions"
-          eyebrow="Turnkey Expertise"
           title="Silo-Based Turnkey Projects"
           image="/images/steel-silo.jpg"
           imageAlt="Square-silo steel structure under construction"

@@ -18,7 +18,7 @@ export function LeadGen() {
   const [sent, setSent] = useState(false);
 
   return (
-    <section className="scroll-mt-24 bg-cloud py-12 md:py-16">
+    <section className="scroll-mt-24 bg-cloud section-pad-sm">
       <Container>
         {/* One fade+rise entrance for the whole banner (once per session). */}
         <motion.div

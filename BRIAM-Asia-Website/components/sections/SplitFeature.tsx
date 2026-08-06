@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowLink } from "@/components/ui/ArrowLink";
-import { Eyebrow } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
@@ -9,7 +8,6 @@ import { useRef } from "react";
 
 export type SplitFeatureProps = {
   id?: string;
-  eyebrow?: string;
   title: React.ReactNode;
   body: React.ReactNode;
   image: string;
@@ -24,7 +22,6 @@ export type SplitFeatureProps = {
 
 export function SplitFeature({
   id,
-  eyebrow,
   title,
   body,
   image,
@@ -44,8 +41,10 @@ export function SplitFeature({
 
   // Split fade-in (boss note): text slides in from the left, image from the
   // right, offset ~150ms — both once per session.
+  // Text column: outer edge aligns with the 1280 Figma grid gutter
+  // (max(40px, (100vw−1280px)/2)); image column stays full-bleed.
   const text = (
-    <div className="flex flex-col justify-center px-6 py-14 md:px-10 lg:px-16 lg:py-28 xl:px-24">
+    <div className="flex flex-col justify-center px-6 py-14 md:px-10 lg:py-28 lg:pl-[max(2.5rem,calc((100vw-1280px)/2))] lg:pr-12">
       <motion.div
         initial={reduce ? false : { opacity: 0, x: -56 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -53,7 +52,6 @@ export function SplitFeature({
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         className={cn("w-full max-w-[600px]", left && "lg:ml-auto")}
       >
-        {eyebrow && <Eyebrow className="mb-5">{eyebrow}</Eyebrow>}
         <h2 className="type-h2 text-accent">
           {title}
         </h2>

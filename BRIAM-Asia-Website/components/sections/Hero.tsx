@@ -66,15 +66,6 @@ export function Hero() {
       <motion.div style={reduce ? undefined : { y: yContent, opacity }} className="relative w-full">
         <Container className="flex min-h-[calc(100svh-72px)] flex-col py-14 lg:py-20">
           <div className="max-w-[66rem]">
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: reduce ? 0 : INTRO }}
-              className="mb-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/75"
-            >
-              <span className="h-px w-8 bg-accent-400" /> BRIAM Asia · Singapore
-            </motion.p>
-
             <h1 className="font-display text-[clamp(2.9rem,6.2vw,4.6rem)] leading-[0.92] tracking-[-0.04em] text-white">
               {HEADLINE.map((line, li) => (
                 <span key={li} className="block overflow-hidden">

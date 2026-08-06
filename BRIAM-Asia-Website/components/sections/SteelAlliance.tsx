@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Section";
 import { motion } from "motion/react";
 
 const TILES = [
@@ -62,7 +61,7 @@ function Tile({
 
 export function SteelAlliance() {
   return (
-    <section className="relative scroll-mt-24 overflow-hidden bg-ink py-20 text-white md:py-28">
+    <section className="relative scroll-mt-24 overflow-hidden bg-ink text-white section-pad">
       {/* Figma "Pattern1" — dot-grid matrix behind the content, plus faint depth glows */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-dot-grid" />
@@ -73,7 +72,6 @@ export function SteelAlliance() {
       <Container className="relative">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <Eyebrow tone="light" className="mb-5">SCE RD Steel Alliance</Eyebrow>
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}

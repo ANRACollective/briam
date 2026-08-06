@@ -14,12 +14,11 @@ export function Container({
   return (
     <div
       className={cn(
-        // Fluid: spreads across the page with comfortable gutters, only capping
-        // on ultra-wide screens so content stays edge-to-edge, not boxed in.
-        "mx-auto w-full max-w-[2100px]",
-        wide
-          ? "px-6 md:px-10 lg:px-12 xl:px-16"
-          : "px-6 md:px-10 lg:px-16 xl:px-24",
+        // Figma grid: 1280px content column, 80px gutters at 1440
+        // (max-w 1360 − 2×40px padding = 1280 content; centering adds the rest).
+        "mx-auto w-full max-w-[1360px] px-6 md:px-10",
+        // `wide` kept for API compatibility — the Figma grid is uniform.
+        wide && "",
         className,
       )}
     >

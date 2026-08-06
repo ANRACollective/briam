@@ -111,7 +111,7 @@ export function Gateways() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="gateways" className="scroll-mt-24 bg-cloud py-16 md:py-20">
+    <section id="gateways" className="scroll-mt-24 bg-cloud section-pad">
       <Container wide>
         {/* ---------- Desktop / tablet: horizontal accordion ---------- */}
         <div className="hidden gap-3 md:flex md:h-[465px]">

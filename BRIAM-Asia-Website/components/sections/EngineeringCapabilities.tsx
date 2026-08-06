@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Section";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
@@ -91,7 +90,7 @@ export function EngineeringCapabilities() {
     <section
       ref={sectionRef}
       id="capabilities"
-      className="relative scroll-mt-24 overflow-hidden bg-ink py-24 text-white md:py-36"
+      className="relative scroll-mt-24 overflow-hidden bg-ink text-white section-pad"
     >
       {/* twirling BRIAM sculpture background (white render on black → blends into ink) */}
       <motion.div
@@ -112,7 +111,6 @@ export function EngineeringCapabilities() {
 
       <Container className="relative z-10">
         <div className="mx-auto mb-16 max-w-2xl text-center md:mb-24">
-          <Eyebrow tone="light" className="mb-5 justify-center">Engineering Capabilities</Eyebrow>
           <h2 className="type-h2 text-white">
             End-to-end,
             <br />
