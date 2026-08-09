@@ -105,7 +105,7 @@ export function RegionalPresence() {
                   <h3 className="font-display text-2xl uppercase leading-none tracking-[-0.02em] text-ink">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink/70">{item.body}</p>
+                  <p className="mt-2 text-[15px] leading-[1.2] text-ink/70">{item.body}</p>
                 </div>
               </motion.li>
             ))}

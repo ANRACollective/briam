@@ -129,7 +129,7 @@ export function ContactForm() {
                   required
                   rows={5}
                   placeholder="Type your message…"
-                  className={cn(inputCls, "h-auto resize-y py-3 leading-relaxed")}
+                  className={cn(inputCls, "h-auto resize-y py-3 leading-[1.2]")}
                 />
               </Field>
               <div className="flex items-center gap-3 text-sm text-ink/80">

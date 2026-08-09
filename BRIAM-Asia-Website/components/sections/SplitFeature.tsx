@@ -55,7 +55,7 @@ export function SplitFeature({
         <h2 className="type-h2 text-accent">
           {title}
         </h2>
-        <div className="mt-6 space-y-4 text-lg leading-relaxed text-ink/80">
+        <div className="mt-6 space-y-4 text-lg leading-[1.2] text-ink/80">
           {body}
         </div>
         {cta && (

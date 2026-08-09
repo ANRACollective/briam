@@ -103,7 +103,8 @@ export function Hero() {
             className="mt-auto flex justify-end pt-16"
           >
             <div className="max-w-xl">
-              <p className="text-xl leading-relaxed text-white/90 md:text-2xl">
+              {/* line-height inherited from the Figma type ramp tokens */}
+              <p className="text-xl text-white/90 md:text-2xl">
                 Part of BRIAM Group&apos;s international engineering network. Based
                 in Singapore. Built for Southeast Asia.
               </p>

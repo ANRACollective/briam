@@ -86,7 +86,7 @@ export function Footer() {
               <br />
               Storage Group
             </h2>
-            <address className="mt-5 text-base not-italic leading-relaxed text-white/55">
+            <address className="mt-5 text-base not-italic leading-[1.2] text-white/55">
               75 High Street,
               <br />
               Singapore 179435

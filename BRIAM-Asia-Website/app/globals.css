@@ -4,19 +4,25 @@
    BRIAM Asia — design tokens (mapped from Figma)
    ------------------------------------------------------------------ */
 @theme {
-  /* ---- Colors — extracted from the Figma file (fills read via MCP) ---- */
-  --color-ink: #202d35; /* Primary / text (Figma text fill) */
-  --color-ink-800: #2b3945;
-  --color-accent: #773dbd; /* Purple accent (Figma button fill) */
-  --color-accent-700: #5f2f99; /* AA-contrast purple for small text on light bg */
-  --color-accent-600: #8a4fd6; /* Hover state */
-  --color-accent-400: #a679e0; /* Light purple for text/accents on dark */
-  --color-sce: #66adc8; /* SCE blue */
-  --color-silbloxx: #ffdc00; /* Silbloxx yellow */
-  --color-surface: #ffffff;
-  --color-cloud: #e0e0e0; /* Background grey (Figma navbar/section fill) */
-  --color-line: #c1c2c4; /* Border */
-  --color-muted: #6b727a;
+  /* ---- Colors — EXACT Figma variables (Style Guide → Variables frame) ----
+     Primitives: White-100 #FFFFFF · Gray-50 #F9F9F9 · Gray-100 #E0E0E0 ·
+                 Gray-200 #AAAAAA · Slate-100 #212E36 · Purple-600 #773DBD
+     Semantics:  Accent/PrimaryHover=Purple-600 · Background=Gray-100 ·
+                 Border/TextMuted/Disabled=Gray-200 · TextPrimary/Primary=Slate-100 ·
+                 Surface/OnAccent/TextInverse=White */
+  --color-ink: #212e36; /* Slate-100 — TextPrimary / Primary */
+  --color-ink-800: #2c3b45; /* implementation shade (raised dark surface) */
+  --color-accent: #773dbd; /* Purple-600 — Accent */
+  --color-accent-700: #5f2f99; /* implementation shade: AA-contrast text on light */
+  --color-accent-600: #8a4fd6; /* implementation shade: hover feedback */
+  --color-accent-400: #a679e0; /* implementation shade: readable purple on dark */
+  --color-sce: #66adc8; /* SCE blue (brand, not in variable set) */
+  --color-silbloxx: #ffdc00; /* Silbloxx yellow (brand, not in variable set) */
+  --color-surface: #ffffff; /* White-100 — Surface */
+  --color-surface-soft: #f9f9f9; /* Gray-50 */
+  --color-cloud: #e0e0e0; /* Gray-100 — Background */
+  --color-line: #aaaaaa; /* Gray-200 — Border */
+  --color-muted: #6b727a; /* implementation shade (Gray-200 fails AA for body text) */
 
   /* Fonts (--font-anton = Druk Text Medium, Poppins ≈ Galano Grotesque) */
   --font-heading: var(--font-anton), "Arial Narrow", sans-serif;
@@ -40,10 +46,19 @@
   --gap-accordion: 12px; /* Gateways panel gap */
   --panel-collapsed: 160px; /* Gateways collapsed panel width */
 
-  /* Radii */
+  /* Radii — Figma Style Guide: Small 4 (≥4-col elements) · Medium 8 (2–3 col) · Large 12 (1–2 col) */
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Body line-heights — Figma type ramp (Galano):
+     20px/110% · 18px/110% · 16px/120% · 14px/120% · 12px/150% */
+  --text-xs--line-height: 1.5;
+  --text-sm--line-height: 1.2;
+  --text-base--line-height: 1.2;
+  --text-lg--line-height: 1.1;
+  --text-xl--line-height: 1.1;
+  --text-2xl--line-height: 1.2;
 
   /* Motion */
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
@@ -54,7 +69,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #202d35;
+  --foreground: #212e36;
 }
 
 * {

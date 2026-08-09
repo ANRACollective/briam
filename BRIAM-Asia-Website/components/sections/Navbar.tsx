@@ -124,7 +124,7 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-cloud shadow-[0_1px_0_rgba(32,45,53,0.08)]" // hard grey, no alpha/blur — matches Figma fill
+          ? "bg-cloud shadow-[0_1px_0_rgba(33,46,54,0.08)]" // hard grey, no alpha/blur — matches Figma fill
           : "bg-transparent",
       )}
     >

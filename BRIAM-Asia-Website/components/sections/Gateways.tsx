@@ -171,7 +171,7 @@ export function Gateways() {
                   <div className="absolute inset-0 bg-ink/10 transition-colors duration-300 group-hover:bg-ink/25" />
 
                   {/* Compact floating card — kept small so the photo breathes */}
-                  <div className="absolute bottom-5 left-5 w-[min(380px,calc(100%-2.5rem))] bg-white p-5 shadow-[0_24px_60px_-24px_rgba(32,45,53,0.6)]">
+                  <div className="absolute bottom-5 left-5 w-[min(380px,calc(100%-2.5rem))] bg-white p-5 shadow-[0_24px_60px_-24px_rgba(33,46,54,0.6)]">
                     <div className="flex items-center justify-between gap-3">
                       {p.wordmark}
                       {/* Standard static button — no animation (boss note) */}
@@ -187,7 +187,7 @@ export function Gateways() {
                       {p.heading}
                     </h3>
                     <p className="mt-2.5 text-[13px] font-medium leading-snug text-ink/85">{p.lead}</p>
-                    <p className="mt-2 text-xs leading-relaxed text-ink/60">{p.body}</p>
+                    <p className="mt-2 text-xs leading-[1.2] text-ink/60">{p.body}</p>
                   </div>
                 </div>
               </motion.div>
@@ -248,7 +248,7 @@ export function Gateways() {
                           {p.heading}
                         </h3>
                         <p className="mt-2.5 text-sm font-medium leading-snug text-ink/85">{p.lead}</p>
-                        <p className="mt-2 text-[13px] leading-relaxed text-ink/60">{p.body}</p>
+                        <p className="mt-2 text-[13px] leading-[1.2] text-ink/60">{p.body}</p>
                       </div>
                     </div>
                   </div>

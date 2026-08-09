@@ -59,7 +59,7 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
             transition={{ duration: 0.55, delay: 0.28, ease }}
           >
             <h3 className="type-h3 mt-4 text-white">{step.title}</h3>
-            <p className="mt-4 text-base leading-relaxed text-white/70">{step.body}</p>
+            <p className="mt-4 text-base leading-[1.2] text-white/70">{step.body}</p>
           </motion.div>
         </div>
       </motion.div>

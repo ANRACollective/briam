@@ -44,7 +44,7 @@ export function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="group block cursor-pointer overflow-hidden rounded-md bg-white transition-shadow duration-300 hover:shadow-[0_30px_60px_-30px_rgba(32,45,53,0.55)]"
+              className="group block cursor-pointer overflow-hidden rounded-md bg-white transition-shadow duration-300 hover:shadow-[0_30px_60px_-30px_rgba(33,46,54,0.55)]"
             >
               <div className="relative h-[277px] overflow-hidden">
                 <Image

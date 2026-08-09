@@ -42,7 +42,7 @@ export function FloatingSilo({
           animate={reduce ? undefined : { rotateY: [-24, 24, -24] }}
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: floatDelay }}
         >
-        <svg viewBox="0 0 420 420" className="h-full w-full drop-shadow-[0_40px_60px_rgba(32,45,53,0.28)]">
+        <svg viewBox="0 0 420 420" className="h-full w-full drop-shadow-[0_40px_60px_rgba(33,46,54,0.28)]">
           <defs>
             <linearGradient id="siloTop" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stopColor="#ffffff" />
