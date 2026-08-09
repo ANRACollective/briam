@@ -206,7 +206,8 @@ export function RegionalPresence() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,520px)_1fr] lg:gap-16">
+        {/* 1:1 column ratio (client note) — image and list split the row evenly */}
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
