@@ -100,7 +100,13 @@ export function SplitFeature({
 
   return (
     <section id={id} className={cn("scroll-mt-24 bg-cloud", className)}>
-      <div className="grid grid-cols-1 items-stretch lg:grid-cols-2">
+      {/* Text : image = 1:2 (client revision — was 1:1) */}
+      <div
+        className={cn(
+          "grid grid-cols-1 items-stretch",
+          left ? "lg:grid-cols-[2fr_1fr]" : "lg:grid-cols-[1fr_2fr]",
+        )}
+      >
         {left ? (
           <>
             <div className="order-2 lg:order-1">{media}</div>
