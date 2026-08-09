@@ -145,7 +145,8 @@ export function EngineeringCapabilities() {
             )}
           </div>
 
-          <ul className="space-y-16 md:space-y-24">
+          {/* Tightened step rhythm (client): steps sit closer along the spine */}
+          <ul className="space-y-8 md:space-y-10">
             {STEPS.map((step, i) => (
               <StepCard key={step.n} step={step} i={i} reduce={!!reduce} />
             ))}
