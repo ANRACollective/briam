@@ -34,15 +34,6 @@ function Tile({
       transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
       className="group relative overflow-hidden rounded-md border border-white/15 bg-white/[0.08] p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent/60 hover:bg-white/[0.12]"
     >
-      {/* radial glow, revealed on hover */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{
-          background:
-            "radial-gradient(240px circle at 30% 20%, rgba(119,61,189,0.28), transparent 70%)",
-        }}
-      />
       <h3
         className={
           compact
