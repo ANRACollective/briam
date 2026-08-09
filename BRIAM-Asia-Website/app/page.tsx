@@ -41,7 +41,6 @@ export default function Home() {
               </p>
             </>
           }
-          cta={{ label: "Explore Solutions", href: "#gateways" }}
         />
 
         <EngineeringCapabilities />
