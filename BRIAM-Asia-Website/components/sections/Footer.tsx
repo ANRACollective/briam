@@ -47,21 +47,23 @@ function OutArrow() {
 export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-ink text-white">
-      {/* BRIAM symbol bleeding off the left edge (Figma) */}
+      {/* BRIAM symbol bleeding off the left edge — Figma: ~136px tall, only
+          slightly cropped (~12%), sitting just above the wordmark row */}
       <Image
         src="/images/logo-briam-mark.png"
         alt=""
         aria-hidden
         width={254}
         height={382}
-        className="pointer-events-none absolute left-0 top-14 hidden h-28 w-auto -translate-x-[45%] md:top-16 md:block lg:h-32"
+        className="pointer-events-none absolute left-0 top-12 hidden h-[8.5rem] w-auto -translate-x-[12%] md:block"
       />
 
-      <Container className="relative py-16 md:py-20">
+      <Container className="relative pb-10 pt-16 md:pb-12 md:pt-[4.5rem]">
         {/* Top: wordmark · nav · bulk-storage · group brands */}
         <div className="flex flex-col gap-14 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-          {/* Wordmark (text only — the symbol lives on the edge) */}
-          <div className="shrink-0">
+          {/* Wordmark (text only — the symbol lives on the edge).
+              Figma indents it ~62px inside the content grid to clear the mark. */}
+          <div className="shrink-0 lg:pl-16">
             <a href="#home" aria-label="BRIAM Asia, home" className="inline-block">
               <Image
                 src="/images/logo-briam-wordmark.png"
@@ -75,7 +77,7 @@ export function Footer() {
           </div>
 
           {/* Primary nav */}
-          <nav aria-label="Footer" className="flex flex-col gap-3">
+          <nav aria-label="Footer" className="flex flex-col gap-5">
             {NAV.map((link) => (
               <a
                 key={link.label}
@@ -89,12 +91,12 @@ export function Footer() {
 
           {/* The Bulk Storage Group */}
           <div className="max-w-xs">
-            <h2 className="font-display text-[2rem] uppercase leading-[0.9] tracking-[-0.02em]">
+            <h2 className="font-display text-[2.5rem] uppercase leading-[0.9] tracking-[-0.02em]">
               The Bulk
               <br />
               Storage Group
             </h2>
-            <address className="mt-4 text-sm not-italic leading-[1.35] text-white/60">
+            <address className="mt-4 text-base not-italic leading-[1.35] text-white/60">
               75 High Street,
               <br />
               Singapore 179435
@@ -102,7 +104,7 @@ export function Footer() {
           </div>
 
           {/* Group brands */}
-          <div className="flex w-full max-w-[240px] shrink-0 flex-col gap-5">
+          <div className="flex w-full max-w-[240px] shrink-0 flex-col gap-7">
             {BRANDS.map((brand) => (
               <a
                 key={brand.label}
@@ -121,7 +123,7 @@ export function Footer() {
         </div>
 
         {/* Legal row */}
-        <div className="mt-16 flex flex-col gap-4 border-t border-white/12 pt-6 text-sm text-white/60 md:mt-20 md:flex-row md:items-center md:justify-between">
+        <div className="mt-16 flex flex-col gap-4 border-t border-white/12 pt-8 text-sm text-white/60 md:mt-20 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-x-7 gap-y-2">
             <a href="#" className="underline underline-offset-2 transition-colors duration-300 hover:text-white">
               Disclaimer
