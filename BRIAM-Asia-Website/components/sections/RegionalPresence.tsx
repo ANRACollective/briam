@@ -243,17 +243,8 @@ export function RegionalPresence() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="group relative flex items-start gap-5 overflow-hidden rounded-lg border border-line/60 bg-white p-5 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-28px_rgba(119,61,189,0.6)]"
+                className="group relative flex items-start gap-5 overflow-hidden rounded-lg border border-line/60 bg-white p-5 transition-colors duration-300 hover:border-accent/40"
               >
-                {/* soft radial purple glow on hover (motion sticky) */}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  style={{
-                    background:
-                      "radial-gradient(280px circle at 18% 30%, rgba(119,61,189,0.10), transparent 70%)",
-                  }}
-                />
                 {/* Boxless ambient icon: animates while in view, extra lift + tilt on hover */}
                 <span className="relative mt-0.5 flex shrink-0 items-center justify-center text-accent transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-rotate-6 group-hover:scale-110">
                   <item.Icon on={on} delay={i * STAGGER} />
