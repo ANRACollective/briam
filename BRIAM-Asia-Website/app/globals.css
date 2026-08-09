@@ -100,6 +100,9 @@ body {
   color: var(--foreground);
   font-family: var(--font-body);
   overflow-x: hidden;
+  /* Releases the anti-FOUC guard in layout.tsx (inline body{opacity:0}) the
+     moment this stylesheet is applied — !important wins regardless of order. */
+  opacity: 1 !important;
 }
 
 /* ---- Standard section rhythm (Figma: 80px vertical padding, 1280 grid) ---- */

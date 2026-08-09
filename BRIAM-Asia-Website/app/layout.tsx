@@ -105,6 +105,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${druk.variable} ${poppins.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-surface text-ink">
+        {/* Anti-FOUC guard: inline in the initial HTML, so it applies the
+            instant the document parses — before the external stylesheet has
+            loaded. It hides the page on the brand dark for that window;
+            globals.css releases it with `body{opacity:1 !important}` the
+            moment real styles are available. Without this, a refresh paints
+            ~100ms of raw unstyled content and visibly snaps when CSS lands. */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: "html{background:#212e36}body{opacity:0}",
+          }}
+        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
