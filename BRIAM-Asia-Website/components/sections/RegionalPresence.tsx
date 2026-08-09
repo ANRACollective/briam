@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 
 function Icon({ path }: { path: ReactNode }) {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden>
       {path}
     </svg>
   );
@@ -98,7 +98,8 @@ export function RegionalPresence() {
                       "radial-gradient(280px circle at 18% 30%, rgba(119,61,189,0.10), transparent 70%)",
                   }}
                 />
-                <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+                {/* Boxless icon (client note): bare mark, mild lift + tilt on hover */}
+                <span className="relative mt-0.5 flex shrink-0 items-center justify-center text-accent transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-rotate-6 group-hover:scale-110">
                   <Icon path={item.icon} />
                 </span>
                 <div className="relative">
