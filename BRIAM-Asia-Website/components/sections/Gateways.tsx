@@ -60,7 +60,8 @@ const PANELS: Panel[] = [
     n: "03",
     short: "Silo-Only Product Supplier",
     wordmark: (
-      <span className="font-display text-lg leading-none tracking-[0.14em] text-ink">SILBLOXX</span>
+      // Official Silbloxx wordmark (square-O), exported from Figma
+      <Image src="/images/logo-silbloxx.svg" alt="SILBLOXX" width={99} height={10} className="h-3 w-auto" />
     ),
     heading: "Silo-only product supplier",
     lead: "Silbloxx offers silo-only products by catering to machine builders and system integrators as well as the members of the BRIAM-Group.",
