@@ -62,9 +62,16 @@ function Tile({
 export function SteelAlliance() {
   return (
     <section className="relative scroll-mt-24 overflow-hidden bg-ink text-white section-pad">
-      {/* Figma "Pattern1" — dot-grid matrix behind the content, plus faint depth glows */}
+      {/* Figma "Pattern1" — dot-grid matrix behind the content, plus faint depth glows.
+          Client note: the dots breathe slowly, permanently — two counter-phase
+          layers (base grid + half-step offset) so a calm wave rolls through
+          the field as one set dims and the other rises. Pure CSS, always live. */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-dot-grid" />
+        <div className="absolute inset-0 bg-dot-grid animate-dot-breathe" />
+        <div
+          className="absolute inset-0 bg-dot-grid animate-dot-breathe-counter"
+          style={{ backgroundPosition: "22px 22px" }}
+        />
         <div className="absolute -right-40 top-0 h-[420px] w-[420px] rounded-full bg-accent/12 blur-[140px]" />
         <div className="absolute -left-40 bottom-0 h-[360px] w-[360px] rounded-full bg-sce/10 blur-[140px]" />
       </div>

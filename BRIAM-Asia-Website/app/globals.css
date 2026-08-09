@@ -133,6 +133,34 @@ body {
   background-position: 0 0;
 }
 
+/* Client note: the dot matrix breathes slowly, permanently — a calm ~8s
+   opacity swell, pure CSS so it runs live without JS or scroll gating.
+   Two layers in counter-phase (base + offset) keep the field feeling
+   organic: as one wave of dots dims, the other rises. */
+@keyframes dot-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-dot-breathe {
+  animation: dot-breathe 8s ease-in-out infinite;
+}
+.animate-dot-breathe-counter {
+  animation: dot-breathe 8s ease-in-out infinite;
+  animation-delay: -4s; /* counter-phase */
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-dot-breathe,
+  .animate-dot-breathe-counter {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
 /* Condensed display headings — mimic Druk Text's tight metrics */
 .font-display {
   font-family: var(--font-heading);
