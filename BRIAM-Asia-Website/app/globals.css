@@ -72,6 +72,19 @@
   --foreground: #212e36;
 }
 
+/* Figma renders on wide-gamut monitors in Display P3, which makes #773DBD look
+   punchier there than the same hex rendered as sRGB in a browser. Re-declare the
+   brand purples with raw P3 channel values so the site matches Figma's rendering
+   on wide-gamut screens (hex above stays as the fallback). */
+@supports (color: color(display-p3 1 1 1)) {
+  :root {
+    --color-accent: color(display-p3 0.4667 0.2392 0.7412); /* Purple-600 */
+    --color-accent-600: color(display-p3 0.5412 0.3098 0.8392);
+    --color-accent-400: color(display-p3 0.651 0.4745 0.8784);
+    --color-accent-700: color(display-p3 0.3725 0.1843 0.6);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
