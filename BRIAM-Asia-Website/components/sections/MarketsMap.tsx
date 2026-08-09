@@ -162,7 +162,7 @@ export function MarketsMap() {
                           ? "var(--color-accent)"
                           : "rgba(255,255,255,0.05)"
                     }
-                    stroke={c.highlight ? "rgba(196,160,240,0.85)" : "rgba(255,255,255,0.12)"}
+                    stroke={c.highlight ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.12)"}
                     strokeWidth={isActive ? 1.6 : 0.8}
                     onMouseEnter={c.highlight ? () => enter(hoverName) : undefined}
                     onMouseLeave={c.highlight ? () => leave(hoverName) : undefined}
@@ -229,7 +229,7 @@ export function MarketsMap() {
             {REGIONS.map((group) => (
               <div key={group.region}>
                 <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
-                  <span aria-hidden className="h-px w-5 bg-accent-400" />
+                  <span aria-hidden className="h-px w-5 bg-accent" />
                   {group.region}
                 </p>
                 <ul className="flex flex-wrap gap-x-4 gap-y-1.5">
@@ -243,7 +243,7 @@ export function MarketsMap() {
                         onBlur={() => leave(m.name)}
                         className={cn(
                           "font-display cursor-pointer text-lg uppercase leading-tight tracking-[-0.01em] transition-colors duration-200",
-                          active === m.name ? "text-accent-400" : "text-white/85 hover:text-accent-400",
+                          active === m.name ? "text-accent" : "text-white/85 hover:text-accent",
                         )}
                         aria-label={`${m.name} — ${m.note}`}
                       >
@@ -262,7 +262,7 @@ export function MarketsMap() {
           {REGIONS.map((group) => (
             <div key={`m-${group.region}`}>
               <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
-                <span aria-hidden className="h-px w-5 bg-accent-400" />
+                <span aria-hidden className="h-px w-5 bg-accent" />
                 {group.region}
               </p>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">

@@ -32,7 +32,7 @@ function Tile({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.4 }}
       transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative overflow-hidden rounded-md border border-white/15 bg-white/[0.08] p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent-400/60 hover:bg-white/[0.12]"
+      className="group relative overflow-hidden rounded-md border border-white/15 bg-white/[0.08] p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent/60 hover:bg-white/[0.12]"
     >
       {/* radial glow, revealed on hover */}
       <span
@@ -46,8 +46,8 @@ function Tile({
       <h3
         className={
           compact
-            ? "font-display relative text-[1.75rem] uppercase leading-[0.9] tracking-[-0.02em] text-white transition-colors group-hover:text-accent-400"
-            : "font-display relative text-[2.5rem] uppercase leading-[0.85] tracking-[-0.02em] text-white transition-colors group-hover:text-accent-400"
+            ? "font-display relative text-[1.75rem] uppercase leading-[0.9] tracking-[-0.02em] text-white transition-colors group-hover:text-accent"
+            : "font-display relative text-[2.5rem] uppercase leading-[0.85] tracking-[-0.02em] text-white transition-colors group-hover:text-accent"
         }
       >
         {tile.title}

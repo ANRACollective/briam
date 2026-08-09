@@ -54,7 +54,7 @@ export function Intro() {
           </span>
         </div>
 
-        <span className="intro-line mt-6 block h-[2px] w-40 origin-left bg-gradient-to-r from-accent via-accent-400 to-sce" />
+        <span className="intro-line mt-6 block h-[2px] w-40 origin-left bg-gradient-to-r from-accent to-sce" />
       </div>
     </div>
   );

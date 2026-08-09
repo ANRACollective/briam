@@ -70,9 +70,9 @@ export function RegionalPresence() {
             <div className="absolute bottom-5 left-5 flex items-center gap-2 text-white">
               <span className="relative flex h-3 w-3">
                 {!reduce && (
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-75" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
                 )}
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-accent-400" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-accent" />
               </span>
               <span className="font-display text-xl uppercase tracking-[-0.01em]">Singapore HQ</span>
             </div>

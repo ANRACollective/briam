@@ -84,7 +84,7 @@ export function LeadGen() {
                 aria-live="polite"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="mt-4 text-sm text-accent-400"
+                className="mt-4 text-sm text-accent"
               >
                 Thanks — the capability deck is on its way to {email}.
               </motion.p>

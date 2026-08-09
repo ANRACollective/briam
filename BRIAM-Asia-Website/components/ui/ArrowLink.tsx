@@ -18,7 +18,7 @@ export function ArrowLink({
 }) {
   const color =
     tone === "light"
-      ? "text-white hover:text-accent-400"
+      ? "text-white hover:text-accent"
       : tone === "ink"
         ? "text-ink hover:text-accent"
         : "text-accent hover:text-accent-700";

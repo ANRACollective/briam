@@ -47,7 +47,7 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.5, delay: 0.12, type: "spring", stiffness: 260, damping: 18 }}
-            className="font-display block text-[3.5rem] leading-none text-accent-400 md:text-[4rem]"
+            className="font-display block text-[3.5rem] leading-none text-accent md:text-[4rem]"
           >
             {step.n}
           </motion.span>
@@ -114,7 +114,7 @@ export function EngineeringCapabilities() {
           <h2 className="type-h2 text-white">
             End-to-end,
             <br />
-            <span className="text-accent-400">from design to service</span>
+            <span className="text-accent">from design to service</span>
           </h2>
         </div>
 
@@ -128,7 +128,7 @@ export function EngineeringCapabilities() {
             {!reduce && (
               <motion.span
                 aria-hidden
-                className="absolute left-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-white shadow-[0_0_16px_6px_rgba(166,121,224,0.85)]"
+                className="absolute left-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-white shadow-[0_0_16px_6px_rgba(119,61,189,0.85)]"
                 style={{ top: dotTop }}
               />
             )}

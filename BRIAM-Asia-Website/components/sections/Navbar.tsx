@@ -163,7 +163,7 @@ export function Navbar() {
                     className={cn(
                       "group relative text-[17px] font-medium transition-colors duration-150 ease-out",
                       onDark
-                        ? activeLink ? "text-accent-400" : "text-white hover:text-accent-400"
+                        ? activeLink ? "text-accent" : "text-white hover:text-accent"
                         : activeLink ? "text-accent" : "text-ink hover:text-accent",
                     )}
                   >
@@ -196,7 +196,7 @@ export function Navbar() {
                   className={cn(
                     "group relative flex items-center gap-1 text-[17px] font-medium transition-colors duration-150 ease-out",
                     onDark
-                      ? activeLink ? "text-accent-400" : "text-white hover:text-accent-400"
+                      ? activeLink ? "text-accent" : "text-white hover:text-accent"
                       : activeLink ? "text-accent" : "text-ink hover:text-accent",
                   )}
                 >
@@ -328,7 +328,7 @@ export function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block border-b border-white/10 py-4 text-2xl font-medium text-white transition-colors hover:text-accent-400"
+                    className="block border-b border-white/10 py-4 text-2xl font-medium text-white transition-colors hover:text-accent"
                   >
                     {link.label}
                   </a>

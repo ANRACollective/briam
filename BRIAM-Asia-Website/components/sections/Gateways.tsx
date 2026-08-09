@@ -142,7 +142,7 @@ export function Gateways() {
                   )}
                 >
                   <span>
-                    <span className="font-display block text-2xl text-accent-400">{p.n}</span>
+                    <span className="font-display block text-2xl text-accent">{p.n}</span>
                     <span className="font-display mt-3 block w-[120px] text-[1.35rem] uppercase leading-[0.95] tracking-[-0.01em] text-white">
                       {p.short}
                     </span>
@@ -215,7 +215,7 @@ export function Gateways() {
                   className="flex w-full cursor-pointer items-center justify-between gap-4 bg-ink p-5 text-left"
                 >
                   <span className="flex items-baseline gap-4">
-                    <span className="font-display text-xl text-accent-400">{p.n}</span>
+                    <span className="font-display text-xl text-accent">{p.n}</span>
                     <span className="font-display text-lg uppercase leading-none tracking-[-0.01em] text-white">
                       {p.short}
                     </span>

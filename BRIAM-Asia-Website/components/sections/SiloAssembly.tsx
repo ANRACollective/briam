@@ -133,7 +133,7 @@ export function SiloAssembly() {
         {!reduce && (
           <motion.div
             aria-hidden
-            className="absolute bottom-0 left-0 h-[3px] w-full origin-left bg-gradient-to-r from-accent via-accent-400 to-sce"
+            className="absolute bottom-0 left-0 h-[3px] w-full origin-left bg-gradient-to-r from-accent to-sce"
             style={{ scaleX: barScale }}
           />
         )}

@@ -72,7 +72,7 @@ export function Footer() {
               <a
                 key={link.label}
                 href={link.href}
-                className="font-display w-fit text-xl uppercase leading-none tracking-[-0.01em] text-white/90 transition-colors duration-300 hover:text-accent-400 md:text-2xl"
+                className="font-display w-fit text-xl uppercase leading-none tracking-[-0.01em] text-white/90 transition-colors duration-300 hover:text-accent md:text-2xl"
               >
                 {link.label}
               </a>
@@ -101,7 +101,7 @@ export function Footer() {
                 href={brand.href}
                 className="group flex items-center justify-between gap-6"
               >
-                <span className="font-display text-xl uppercase leading-none tracking-[-0.01em] text-white/90 transition-colors duration-300 group-hover:text-accent-400 md:text-2xl">
+                <span className="font-display text-xl uppercase leading-none tracking-[-0.01em] text-white/90 transition-colors duration-300 group-hover:text-accent md:text-2xl">
                   {brand.label}
                 </span>
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[4px] bg-accent text-white transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-accent-600 group-hover:shadow-[0_8px_24px_-6px_rgba(119,61,189,0.8)]">
