@@ -94,7 +94,7 @@ export function EngineeringCapabilities() {
   // Client note: mild scroll-driven turn + growth, capped so the render
   // never scales past its served resolution (stays crisp).
   const bgRotate = useTransform(bgProgress, [0, 1], [-9, 9]);
-  const bgScale = useTransform(bgProgress, [0, 0.5, 1], [1.02, 1.16, 1.28]);
+  const bgScale = useTransform(bgProgress, [0, 0.5, 1], [0.72, 0.92, 1.12]); // starts small, grows on scroll (client)
   const bgY = useTransform(bgProgress, [0, 1], ["-6%", "6%"]);
 
   return (
@@ -106,7 +106,7 @@ export function EngineeringCapabilities() {
       {/* twirling BRIAM sculpture background (white render on black → blends into ink) */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[105%] w-[150%] max-w-[1850px] -translate-x-1/2 -translate-y-1/2"
+        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[100%] w-[125%] max-w-[1550px] -translate-x-1/2 -translate-y-1/2"
         style={reduce ? undefined : { rotate: bgRotate, scale: bgScale, y: bgY }}
       >
         <Image
