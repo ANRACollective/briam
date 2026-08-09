@@ -1,39 +1,189 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import Image from "next/image";
-import type { ReactNode } from "react";
+import { useRef } from "react";
 
-function Icon({ path }: { path: ReactNode }) {
+const S = { stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+
+/**
+ * Ambient icon system (client note): the icons come alive the moment the
+ * section is in view — no hover required. Each icon takes its turn in a
+ * gentle periodic rhythm (staggered start, ~5s cycle with calm pauses),
+ * confirmed with ANRA over "continuous loop". All loops are gated behind
+ * `useInView` on the list (so nothing animates off-screen) and fully
+ * disabled under prefers-reduced-motion.
+ */
+
+// Shared rhythm: each icon animates for ~1.8s, rests ~3.4s, and icons are
+// offset by 0.85s each so they visibly "take turns" instead of firing at once.
+const CYCLE_REST = 3.4;
+const STAGGER = 0.85;
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const svgProps = {
+  width: 30,
+  height: 30,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  "aria-hidden": true as const,
+};
+
+// SVG transform sanity: rotate/scale around each element's own box.
+const center = { transformBox: "fill-box", transformOrigin: "center" } as const;
+
+/* 01 — Crosshair: centre dot swells + drifts while the tick marks breathe out */
+function CrosshairIcon({ on, delay }: { on: boolean; delay: number }) {
   return (
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden>
-      {path}
+    <svg {...svgProps}>
+      <motion.circle
+        cx="12"
+        cy="12"
+        r="3.2"
+        {...S}
+        style={center}
+        animate={
+          on
+            ? { scale: [1, 1.28, 1, 1.28, 1], x: [0, 1.2, -1.2, 0.6, 0], y: [0, -1, 1, -0.5, 0] }
+            : { scale: 1, x: 0, y: 0 }
+        }
+        transition={{ duration: 1.8, ease: "easeInOut", repeat: on ? Infinity : 0, repeatDelay: CYCLE_REST, delay }}
+      />
+      <motion.path
+        d="M12 2v3M12 19v3M2 12h3M19 12h3"
+        {...S}
+        style={center}
+        animate={on ? { scale: [1, 1.1, 1], opacity: [1, 0.55, 1] } : { scale: 1, opacity: 1 }}
+        transition={{ duration: 1.8, ease: "easeInOut", repeat: on ? Infinity : 0, repeatDelay: CYCLE_REST, delay }}
+      />
     </svg>
   );
 }
 
-const S = { stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+/* 02 — Four squares: each pane lights up purple in sequence, like windows */
+function SquaresIcon({ on, delay }: { on: boolean; delay: number }) {
+  const rects = [
+    { x: 3, y: 3 },
+    { x: 13, y: 3 },
+    { x: 13, y: 13 },
+    { x: 3, y: 13 },
+  ];
+  return (
+    <svg {...svgProps}>
+      {rects.map((r, idx) => (
+        <motion.rect
+          key={idx}
+          x={r.x}
+          y={r.y}
+          width="8"
+          height="8"
+          rx="1.5"
+          {...S}
+          style={center}
+          animate={
+            on
+              ? {
+                  fill: ["rgba(119,61,189,0)", "rgba(119,61,189,0.38)", "rgba(119,61,189,0)"],
+                  scale: [1, 1.12, 1],
+                }
+              : { fill: "rgba(119,61,189,0)", scale: 1 }
+          }
+          transition={{
+            duration: 0.9,
+            ease: "easeInOut",
+            repeat: on ? Infinity : 0,
+            // rest = shared cycle minus this icon's own active window
+            repeatDelay: CYCLE_REST + 1.8 - 0.9,
+            delay: delay + idx * 0.22,
+          }}
+        />
+      ))}
+    </svg>
+  );
+}
+
+/* 03 — House: the doorway glows warm purple, roofline gives a soft breath */
+function HouseIcon({ on, delay }: { on: boolean; delay: number }) {
+  return (
+    <svg {...svgProps}>
+      <motion.path
+        d="M3 21h18M6 21V8l6-5 6 5v13"
+        {...S}
+        style={center}
+        animate={on ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+        transition={{ duration: 1.8, ease: "easeInOut", repeat: on ? Infinity : 0, repeatDelay: CYCLE_REST, delay }}
+      />
+      {/* glowing door fill */}
+      <motion.path
+        d="M10 21v-6h4v6h-4z"
+        stroke="none"
+        animate={
+          on
+            ? { fill: ["rgba(119,61,189,0)", "rgba(119,61,189,0.45)", "rgba(119,61,189,0)"] }
+            : { fill: "rgba(119,61,189,0)" }
+        }
+        transition={{ duration: 1.8, ease: "easeInOut", repeat: on ? Infinity : 0, repeatDelay: CYCLE_REST, delay: delay + 0.15 }}
+      />
+      <motion.path
+        d="M10 21v-6h4v6"
+        {...S}
+        style={center}
+        animate={on ? { opacity: [1, 0.6, 1] } : { opacity: 1 }}
+        transition={{ duration: 1.8, ease: "easeInOut", repeat: on ? Infinity : 0, repeatDelay: CYCLE_REST, delay: delay + 0.15 }}
+      />
+    </svg>
+  );
+}
+
+/* 04 — Shield: the tick draws itself in, holds, then fades to draw again */
+function ShieldIcon({ on, delay }: { on: boolean; delay: number }) {
+  return (
+    <svg {...svgProps}>
+      <motion.path
+        d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z"
+        {...S}
+        style={center}
+        animate={on ? { scale: [1, 1.06, 1] } : { scale: 1 }}
+        transition={{ duration: 1.8, ease: "easeInOut", repeat: on ? Infinity : 0, repeatDelay: CYCLE_REST, delay }}
+      />
+      <motion.path
+        d="M9 12l2 2 4-4"
+        {...S}
+        strokeWidth={2}
+        animate={on ? { pathLength: [0, 1, 1, 0], opacity: [0, 1, 1, 0] } : { pathLength: 1, opacity: 1 }}
+        transition={{
+          duration: 1.8,
+          times: [0, 0.35, 0.75, 1],
+          ease: EASE,
+          repeat: on ? Infinity : 0,
+          repeatDelay: CYCLE_REST,
+          delay: delay + 0.1,
+        }}
+      />
+    </svg>
+  );
+}
 
 const ITEMS = [
   {
-    icon: <><circle cx="12" cy="12" r="3.2" {...S} /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" {...S} /></>,
+    Icon: CrosshairIcon,
     title: "Turnkey silo projects",
     body: "Full engineering and construction delivery via SCE and Silbloxx.",
   },
   {
-    icon: <><rect x="3" y="3" width="8" height="8" rx="1.5" {...S} /><rect x="13" y="3" width="8" height="8" rx="1.5" {...S} /><rect x="3" y="13" width="8" height="8" rx="1.5" {...S} /><rect x="13" y="13" width="8" height="8" rx="1.5" {...S} /></>,
+    Icon: SquaresIcon,
     title: "Standalone steel structures",
     body: "Exclusive regional delivery via SCE RD Steel Alliance — independent of silo projects.",
   },
   {
-    icon: <><path d="M3 21h18M6 21V8l6-5 6 5v13M10 21v-6h4v6" {...S} /></>,
+    Icon: HouseIcon,
     title: "Prefabricated construction",
     body: "Silbloxx modular building systems for faster on-site delivery.",
   },
   {
-    icon: <><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z" {...S} /><path d="M9 12l2 2 4-4" {...S} /></>,
     // Boss comment #10: compliance framed around each market's own rules
+    Icon: ShieldIcon,
     title: "Building-norm compliance",
     body: "European-grade engineering, certified to each country's building norms.",
   },
@@ -41,6 +191,12 @@ const ITEMS = [
 
 export function RegionalPresence() {
   const reduce = useReducedMotion();
+  const listRef = useRef<HTMLUListElement>(null);
+  // NOT once: the ambient loops run whenever the section is on screen and
+  // stop (and reset) when the user scrolls away — no wasted rAF off-screen.
+  const listInView = useInView(listRef, { amount: 0.25 });
+  const on = listInView && !reduce;
+
   return (
     <section id="regional" className="scroll-mt-24 bg-cloud section-pad">
       <Container>
@@ -79,7 +235,7 @@ export function RegionalPresence() {
           </motion.div>
 
           {/* items */}
-          <ul className="flex flex-col gap-4">
+          <ul ref={listRef} className="flex flex-col gap-4">
             {ITEMS.map((item, i) => (
               <motion.li
                 key={item.title}
@@ -98,9 +254,9 @@ export function RegionalPresence() {
                       "radial-gradient(280px circle at 18% 30%, rgba(119,61,189,0.10), transparent 70%)",
                   }}
                 />
-                {/* Boxless icon (client note): bare mark, mild lift + tilt on hover */}
+                {/* Boxless ambient icon: animates while in view, extra lift + tilt on hover */}
                 <span className="relative mt-0.5 flex shrink-0 items-center justify-center text-accent transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-rotate-6 group-hover:scale-110">
-                  <Icon path={item.icon} />
+                  <item.Icon on={on} delay={i * STAGGER} />
                 </span>
                 <div className="relative">
                   <h3 className="font-display text-2xl uppercase leading-none tracking-[-0.02em] text-ink">
