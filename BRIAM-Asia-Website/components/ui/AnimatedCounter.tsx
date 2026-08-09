@@ -34,10 +34,16 @@ export function AnimatedCounter({
   const inView = useInView(ref, { once: true, amount: 0.5 });
   const count = useMotionValue(0);
   const rounded = useTransform(count, (v) =>
-    `${prefix}${v.toLocaleString("en-US", {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    })}${suffix}`,
+    `${prefix}${
+      // Client format: values ≥1000 read as "1K" instead of "1,000"
+      // (999.5 threshold so the animation's final frame always lands on "1K")
+      v >= 999.5
+        ? `${Math.round(v / 1000)}K`
+        : v.toLocaleString("en-US", {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals,
+          })
+    }${suffix}`,
   );
 
   useEffect(() => {

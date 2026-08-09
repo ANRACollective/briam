@@ -97,15 +97,15 @@ export function EngineeringCapabilities() {
       {/* twirling BRIAM sculpture background (white render on black → blends into ink) */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[100%] w-[130%] max-w-[1600px] -translate-x-1/2 -translate-y-1/2"
+        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[105%] w-[150%] max-w-[1850px] -translate-x-1/2 -translate-y-1/2"
         style={reduce ? undefined : { rotate: bgRotate, scale: bgScale, y: bgY }}
       >
         <Image
-          src="/images/sculpture.png"
+          src="/images/sculpture-cut.png"
           alt=""
           fill
-          sizes="2048px"  // serve the high-res variant — the render scales up to ~2050px displayed
-          className="object-contain opacity-80 [filter:invert(1)] mix-blend-multiply"
+          sizes="2600px"
+          className="object-contain"
         />
       </motion.div>
       {/* soft accent wash */}

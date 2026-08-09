@@ -141,12 +141,12 @@ export function Stats() {
               style={reduce ? undefined : { rotate, scale }}
             >
               <Image
-                src="/images/sculpture.png"
+                src="/images/sculpture-cut.png"
                 alt="BRIAM Asia structural steel silo assembly"
                 fill
-                sizes="60vw"
+                sizes="1400px"
                 priority
-                className="object-contain opacity-90 [filter:invert(1)] mix-blend-multiply"
+                className="object-contain"
               />
             </motion.div>
           </div>
