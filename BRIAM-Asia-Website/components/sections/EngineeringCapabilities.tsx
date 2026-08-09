@@ -101,24 +101,33 @@ export function EngineeringCapabilities() {
     <section
       ref={sectionRef}
       id="capabilities"
-      className="relative scroll-mt-24 overflow-hidden bg-cloud section-pad"
+      // overflow-x-clip (not hidden): overflow-hidden would break the sticky
+      // sculpture — clip contains the 125%-wide art without creating a scroll box
+      className="relative scroll-mt-24 overflow-x-clip bg-cloud section-pad"
     >
-      {/* twirling BRIAM sculpture background (white render on black → blends into ink) */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[100%] w-[125%] max-w-[1550px] -translate-x-1/2 -translate-y-1/2"
-        style={reduce ? undefined : { rotate: bgRotate, scale: bgScale, y: bgY }}
-      >
-        <Image
-          src="/images/sculpture-cut.png"
-          alt=""
-          fill
-          sizes="2600px"
-          className="object-contain"
-        />
-      </motion.div>
-      {/* soft accent wash */}
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.06] blur-[160px]" />
+      {/* Twirling BRIAM sculpture background. Sticky-follow (client): instead
+          of sitting once at the section's centre — which left steps 05–06 on
+          empty grey — the sculpture pins to the viewport and rides along the
+          whole section, so it is always behind whichever step is on screen,
+          still turning and growing with scroll. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
+          <motion.div
+            className="relative h-[105vh] w-[125%] max-w-[1550px]"
+            style={reduce ? undefined : { rotate: bgRotate, scale: bgScale, y: bgY }}
+          >
+            <Image
+              src="/images/sculpture-cut.png"
+              alt=""
+              fill
+              sizes="2600px"
+              className="object-contain"
+            />
+          </motion.div>
+          {/* soft accent wash rides with the sculpture */}
+          <div className="absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.06] blur-[160px]" />
+        </div>
+      </div>
 
       <Container className="relative z-10">
         <div className="mx-auto mb-16 max-w-2xl text-center md:mb-24">

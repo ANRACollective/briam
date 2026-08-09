@@ -48,9 +48,10 @@ export function ContactForm() {
 
             <div className="mt-10 flex flex-col gap-8 lg:mt-0">
               <div>
-                <span className="flex h-9 w-9 items-center justify-center rounded-md bg-accent/10 text-accent">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.7" />
+                {/* Figma: bare ink outline icon — no tinted box */}
+                <span className="flex items-center text-ink">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <rect x="3" y="5" width="18" height="14" rx="1" stroke="currentColor" strokeWidth="1.7" />
                     <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
                   </svg>
                 </span>
@@ -64,8 +65,9 @@ export function ContactForm() {
                 <p className="text-ink/80">M <a href="tel:+6582229096" className="underline decoration-line hover:decoration-accent">+65 8222 9096</a></p>
               </div>
               <div>
-                <span className="flex h-9 w-9 items-center justify-center rounded-md bg-accent/10 text-accent">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                {/* Figma: bare ink outline icon — no tinted box */}
+                <span className="flex items-center text-ink">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
                     <circle cx="12" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.7" />
                   </svg>
