@@ -78,8 +78,8 @@ export function Stats() {
     offset: ["start end", "end start"],
   });
 
-  const rotateRaw = useTransform(scrollYProgress, [0, 1], [-22, 22]);
-  const scaleRaw = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1.05, 1.16]);
+  const rotateRaw = useTransform(scrollYProgress, [0, 1], [-32, 32]); // more turn (client)
+  const scaleRaw = useTransform(scrollYProgress, [0, 0.5, 1], [1.05, 1.25, 1.4]); // bigger (client)
   const rotate = useSpring(rotateRaw, { stiffness: 60, damping: 20, mass: 0.6 });
   const scale = useSpring(scaleRaw, { stiffness: 60, damping: 20, mass: 0.6 });
 
@@ -137,14 +137,14 @@ export function Stats() {
           {/* Right — BRIAM sculpture render, twirling on scroll. */}
           <div className="relative h-[62vh] min-h-[480px] lg:h-[94vh]">
             <motion.div
-              className="absolute inset-y-0 left-[-14%] right-[-22%]"
+              className="absolute inset-y-0 left-[-26%] right-[-34%]"
               style={reduce ? undefined : { rotate, scale }}
             >
               <Image
                 src="/images/sculpture-cut.png"
                 alt="BRIAM Asia structural steel silo assembly"
                 fill
-                sizes="1400px"
+                sizes="2048px"
                 priority
                 className="object-contain"
               />
