@@ -23,7 +23,7 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
   return (
     <li className="relative">
       <span className="absolute left-4 top-8 z-10 flex h-4 w-4 -translate-x-1/2 items-center justify-center md:left-1/2">
-        <span className="h-4 w-4 rounded-full border-2 border-accent bg-ink" />
+        <span className="h-4 w-4 rounded-full border-2 border-accent bg-cloud" />
         <motion.span
           className="absolute h-4 w-4 rounded-full bg-accent/40"
           initial={{ scale: 0 }}
@@ -40,7 +40,7 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
         transition={{ duration: 0.65, delay: 0.05, ease }}
         className={`ml-14 text-left md:ml-0 md:w-[calc(50%-3rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
       >
-        <div className="group rounded-xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:bg-white/[0.09] hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.7)] md:p-10">
+        <div className="group rounded-xl border border-line/60 bg-white p-8 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.45)] md:p-10">
           {/* number pops first… */}
           <motion.span
             initial={reduce ? false : { opacity: 0, scale: 0.6 }}
@@ -58,8 +58,8 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.55, delay: 0.28, ease }}
           >
-            <h3 className="type-h3 mt-4 text-white">{step.title}</h3>
-            <p className="mt-4 text-base leading-[1.2] text-white/70">{step.body}</p>
+            <h3 className="type-h3 mt-4 text-ink">{step.title}</h3>
+            <p className="mt-4 text-base leading-[1.2] text-ink/70">{step.body}</p>
           </motion.div>
         </div>
       </motion.div>
@@ -92,7 +92,7 @@ export function EngineeringCapabilities() {
     <section
       ref={sectionRef}
       id="capabilities"
-      className="relative scroll-mt-24 overflow-hidden bg-ink text-white section-pad"
+      className="relative scroll-mt-24 overflow-hidden bg-cloud section-pad"
     >
       {/* twirling BRIAM sculpture background (white render on black → blends into ink) */}
       <motion.div
@@ -105,7 +105,7 @@ export function EngineeringCapabilities() {
           alt=""
           fill
           sizes="2048px"  // serve the high-res variant — the render scales up to ~2050px displayed
-          className="object-contain opacity-70 mix-blend-lighten"
+          className="object-contain opacity-80 [filter:invert(1)] mix-blend-multiply"
         />
       </motion.div>
       {/* soft accent wash */}
@@ -113,7 +113,7 @@ export function EngineeringCapabilities() {
 
       <Container className="relative z-10">
         <div className="mx-auto mb-16 max-w-2xl text-center md:mb-24">
-          <h2 className="type-h2 text-white">
+          <h2 className="type-h2 text-ink">
             End-to-end,
             <br />
             <span className="text-accent">from design to service</span>
@@ -122,7 +122,7 @@ export function EngineeringCapabilities() {
 
         <div ref={ref} className="relative mx-auto max-w-4xl">
           {/* central spine */}
-          <div className="absolute left-4 top-0 h-full w-[3px] bg-white/15 md:left-1/2 md:-translate-x-1/2">
+          <div className="absolute left-4 top-0 h-full w-[3px] bg-ink/15 md:left-1/2 md:-translate-x-1/2">
             <motion.div
               className="absolute left-0 top-0 w-full origin-top bg-gradient-to-b from-accent to-sce"
               style={reduce ? { height: "100%" } : { height: "100%", scaleY: lineScale }}
