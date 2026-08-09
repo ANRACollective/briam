@@ -280,7 +280,7 @@ export function Navbar() {
               )}
             </AnimatePresence>
           </div>
-          <Button href="#contact" variant="accent" className="px-5 py-3">
+          <Button href="#contact" variant="accent" className="px-4 py-2.5">
             Get in Touch
           </Button>
         </div>
@@ -338,7 +338,7 @@ export function Navbar() {
                 <a
                   href="#contact"
                   onClick={() => setOpen(false)}
-                  className="flex items-center justify-center rounded-md bg-accent px-6 py-4 text-lg text-white"
+                  className="flex items-center justify-center rounded-md bg-accent px-5 py-3 text-lg text-white"
                 >
                   Get in Touch
                 </a>

@@ -72,7 +72,7 @@ export function LeadGen() {
               />
               <button
                 type="submit"
-                className="group inline-flex items-center justify-center gap-2 rounded-md bg-accent px-6 py-3 font-medium text-white transition-all duration-300 hover:bg-accent-600 hover:shadow-[0_12px_40px_-8px_rgba(119,61,189,0.8)]"
+                className="group inline-flex items-center justify-center gap-2 rounded-md bg-accent px-5 py-2.5 font-medium text-white transition-all duration-300 hover:bg-accent-600 hover:shadow-[0_12px_40px_-8px_rgba(119,61,189,0.8)]"
               >
                 <DownloadIcon />
                 {sent ? "Sent ✓" : "Download"}

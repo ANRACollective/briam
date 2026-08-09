@@ -152,7 +152,7 @@ export function ContactForm() {
                 type="submit"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="group inline-flex w-fit items-center justify-center gap-2 rounded-md bg-accent px-8 py-3.5 font-medium text-white transition-all duration-300 hover:bg-accent-600 hover:shadow-[0_12px_40px_-8px_rgba(119,61,189,0.8)]"
+                className="group inline-flex w-fit items-center justify-center gap-2 rounded-md bg-accent px-6 py-3 font-medium text-white transition-all duration-300 hover:bg-accent-600 hover:shadow-[0_12px_40px_-8px_rgba(119,61,189,0.8)]"
               >
                 Submit
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">

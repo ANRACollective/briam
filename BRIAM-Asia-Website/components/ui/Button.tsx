@@ -6,8 +6,9 @@ import type { ReactNode } from "react";
 
 type Variant = "accent" | "outline" | "ghost" | "light";
 
+// Trimmed padding one notch site-wide (client: buttons had "mega space")
 const base =
-  "relative inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 will-change-transform";
+  "relative inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium tracking-wide transition-colors duration-300 will-change-transform";
 
 const variants: Record<Variant, string> = {
   accent: "bg-accent text-white hover:bg-accent-600",

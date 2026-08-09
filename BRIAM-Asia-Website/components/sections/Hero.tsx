@@ -109,7 +109,7 @@ export function Hero() {
                 in Singapore. Built for Southeast Asia.
               </p>
               <div className="mt-8">
-                <Button href="#contact" variant="accent" className="px-8 py-4 text-base md:text-lg">
+                <Button href="#contact" variant="accent" className="px-6 py-3 text-base">
                   Get in Touch
                 </Button>
               </div>
