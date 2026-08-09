@@ -40,7 +40,16 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
         transition={{ duration: 0.65, delay: 0.05, ease }}
         className={`ml-14 text-left md:ml-0 md:w-[calc(50%-1.75rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
       >
-        <div className="group rounded-xl border border-line/60 bg-white p-8 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.45)] md:p-10">
+        {/* Boxless (client): open text on the grey, per the Figma layout.
+            The soft radial fade keeps text legible when the sculpture
+            passes underneath — reads as ambient light, not a card. */}
+        <div
+          className="relative p-6 md:p-8"
+          style={{
+            background:
+              "radial-gradient(closest-side, rgba(224,224,224,0.92), rgba(224,224,224,0.55) 65%, transparent 100%)",
+          }}
+        >
           {/* number pops first… */}
           <motion.span
             initial={reduce ? false : { opacity: 0, scale: 0.6 }}
