@@ -74,6 +74,20 @@ const NEAR_RIGHT = new Set(["New Zealand", "Pacific Islands"]);
 const activates = (countryName: string, pacific: boolean | undefined, active: string | null) =>
   active === countryName || (pacific && active === "Pacific Islands");
 
+// Always-on affordance dots (client note): tiny glow dots signal that the
+// purple countries are hoverable. Positioned at each country's visual centre
+// (largest-landmass centroid, precomputed in apacMap.dots) — not the capital —
+// so the composition reads balanced. PNG's dot activates the Pacific Islands
+// market, matching its hover behaviour.
+const DOTS: { key: string; hoverName: string; x: number; y: number }[] = Object.entries(
+  apacMap.dots,
+).map(([key, [x, y]]) => ({
+  key,
+  hoverName: key === "Papua New Guinea" ? "Pacific Islands" : key,
+  x,
+  y,
+}));
+
 /** Subtle expanding pulse at the country's capital — only while hovered. */
 function CapitalPulse() {
   const reduce = useReducedMotion();
@@ -112,6 +126,7 @@ function CardInner({ m }: { m: Market }) {
 }
 
 export function MarketsMap() {
+  const reduce = useReducedMotion();
   const [active, setActive] = useState<string | null>(null);
   const enter = (name: string) => setActive(name);
   const leave = (name: string) => setActive((a) => (a === name ? null : a));
@@ -167,6 +182,31 @@ export function MarketsMap() {
                     onMouseEnter={c.highlight ? () => enter(hoverName) : undefined}
                     onMouseLeave={c.highlight ? () => leave(hoverName) : undefined}
                   />
+                );
+              })}
+
+              {/* tiny glow dots — the "you can hover this" affordance */}
+              {DOTS.map((dot, i) => {
+                if (active === dot.hoverName) return null; // pulse takes over
+                return (
+                  <g key={`dot-${dot.key}`} pointerEvents="none">
+                    {/* soft halo */}
+                    <circle cx={dot.x} cy={dot.y} r={3.6} fill="rgba(255,255,255,0.16)" />
+                    {/* glowing core, gently breathing */}
+                    <motion.circle
+                      cx={dot.x}
+                      cy={dot.y}
+                      r={1.6}
+                      fill="#fff"
+                      style={{ filter: "drop-shadow(0 0 3px rgba(255,255,255,0.9))" }}
+                      animate={reduce ? { opacity: 0.85 } : { opacity: [0.4, 0.95, 0.4] }}
+                      transition={
+                        reduce
+                          ? undefined
+                          : { duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: (i * 0.45) % 3.2 }
+                      }
+                    />
+                  </g>
                 );
               })}
             </svg>
