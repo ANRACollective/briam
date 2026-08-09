@@ -17,7 +17,7 @@ const STEPS = [
 // Once-per-session staggered reveal. Figma layout (boss note): no icon, no
 // "Step" word — just the big purple number, a larger Druk title, then body.
 function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number; reduce: boolean }) {
-  const left = i % 2 === 0;
+  const left = i % 2 === 1; // swapped (client): 01 right, 02 left
   const ease = [0.22, 1, 0.36, 1] as const;
 
   return (
@@ -38,7 +38,7 @@ function StepCard({ step, i, reduce }: { step: (typeof STEPS)[number]; i: number
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.65, delay: 0.05, ease }}
-        className={`ml-14 text-left md:ml-0 md:w-[calc(50%-3rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
+        className={`ml-14 text-left md:ml-0 md:w-[calc(50%-1.75rem)] ${left ? "md:mr-auto" : "md:ml-auto"}`}
       >
         <div className="group rounded-xl border border-line/60 bg-white p-8 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_24px_60px_-28px_rgba(119,61,189,0.45)] md:p-10">
           {/* number pops first… */}
@@ -120,7 +120,7 @@ export function EngineeringCapabilities() {
           </h2>
         </div>
 
-        <div ref={ref} className="relative mx-auto max-w-4xl">
+        <div ref={ref} className="relative mx-auto max-w-5xl">
           {/* central spine */}
           <div className="absolute left-4 top-0 h-full w-[3px] bg-ink/15 md:left-1/2 md:-translate-x-1/2">
             <motion.div
