@@ -22,8 +22,8 @@ const BRANDS = [
 function OutArrow() {
   return (
     <svg
-      width="18"
-      height="18"
+      width="16"
+      height="16"
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden
@@ -41,27 +41,35 @@ function OutArrow() {
 }
 
 // Utility zone: no entrance animation (boss sticky), hover transitions only.
+// Layout matched 1:1 to the Figma footer frame: oversized B-mark bleeding off
+// the left viewport edge, text wordmark, flat ink background (no glow),
+// underlined legal links.
 export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-ink text-white">
-      {/* soft ambient depth */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-40 -top-40 h-[460px] w-[460px] rounded-full bg-accent/12 blur-[150px]" />
-      </div>
+      {/* BRIAM symbol bleeding off the left edge (Figma) */}
+      <Image
+        src="/images/logo-briam-mark.png"
+        alt=""
+        aria-hidden
+        width={254}
+        height={382}
+        className="pointer-events-none absolute left-0 top-14 hidden h-28 w-auto -translate-x-[45%] md:top-16 md:block lg:h-32"
+      />
 
       <Container className="relative py-16 md:py-20">
-        {/* Top: logo · nav · bulk-storage · group brands */}
+        {/* Top: wordmark · nav · bulk-storage · group brands */}
         <div className="flex flex-col gap-14 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-          {/* Logo */}
+          {/* Wordmark (text only — the symbol lives on the edge) */}
           <div className="shrink-0">
             <a href="#home" aria-label="BRIAM Asia, home" className="inline-block">
               <Image
-                src="/images/logo-briam.png"
+                src="/images/logo-briam-wordmark.png"
                 alt="BRIAM"
-                width={1200}
-                height={382}
+                width={768}
+                height={260}
                 priority
-                className="h-14 w-auto md:h-[4.5rem]"
+                className="h-12 w-auto md:h-14"
               />
             </a>
           </div>
@@ -72,7 +80,7 @@ export function Footer() {
               <a
                 key={link.label}
                 href={link.href}
-                className="font-display w-fit text-xl uppercase leading-none tracking-[-0.01em] text-white/90 transition-colors duration-300 hover:text-accent md:text-2xl"
+                className="font-display w-fit text-xl uppercase leading-none tracking-[-0.01em] text-white/90 transition-colors duration-300 hover:text-accent"
               >
                 {link.label}
               </a>
@@ -81,12 +89,12 @@ export function Footer() {
 
           {/* The Bulk Storage Group */}
           <div className="max-w-xs">
-            <h2 className="font-display text-[2rem] uppercase leading-[0.9] tracking-[-0.02em] md:text-[2.5rem]">
+            <h2 className="font-display text-[2rem] uppercase leading-[0.9] tracking-[-0.02em]">
               The Bulk
               <br />
               Storage Group
             </h2>
-            <address className="mt-5 text-base not-italic leading-[1.2] text-white/55">
+            <address className="mt-4 text-sm not-italic leading-[1.35] text-white/60">
               75 High Street,
               <br />
               Singapore 179435
@@ -94,17 +102,17 @@ export function Footer() {
           </div>
 
           {/* Group brands */}
-          <div className="flex w-full max-w-[240px] shrink-0 flex-col gap-4">
+          <div className="flex w-full max-w-[240px] shrink-0 flex-col gap-5">
             {BRANDS.map((brand) => (
               <a
                 key={brand.label}
                 href={brand.href}
                 className="group flex items-center justify-between gap-6"
               >
-                <span className="font-display text-xl uppercase leading-none tracking-[-0.01em] text-white/90 transition-colors duration-300 group-hover:text-accent md:text-2xl">
+                <span className="font-display text-xl uppercase leading-none tracking-[-0.01em] text-white/90 transition-colors duration-300 group-hover:text-accent">
                   {brand.label}
                 </span>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-accent text-white transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-accent-600 group-hover:shadow-[0_8px_24px_-6px_rgba(119,61,189,0.8)]">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center bg-accent text-white transition-colors duration-300 group-hover:bg-accent-600">
                   <OutArrow />
                 </span>
               </a>
@@ -113,15 +121,15 @@ export function Footer() {
         </div>
 
         {/* Legal row */}
-        <div className="mt-16 flex flex-col gap-4 border-t border-white/12 pt-6 text-sm text-white/55 md:mt-20 md:flex-row md:items-center md:justify-between">
+        <div className="mt-16 flex flex-col gap-4 border-t border-white/12 pt-6 text-sm text-white/60 md:mt-20 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-x-7 gap-y-2">
-            <a href="#" className="transition-colors duration-300 hover:text-white">
+            <a href="#" className="underline underline-offset-2 transition-colors duration-300 hover:text-white">
               Disclaimer
             </a>
-            <a href="#" className="transition-colors duration-300 hover:text-white">
+            <a href="#" className="underline underline-offset-2 transition-colors duration-300 hover:text-white">
               Privacy Policy
             </a>
-            <a href="#" className="transition-colors duration-300 hover:text-white">
+            <a href="#" className="underline underline-offset-2 transition-colors duration-300 hover:text-white">
               Cookies Policy
             </a>
           </div>
