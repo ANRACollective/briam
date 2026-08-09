@@ -82,9 +82,10 @@ export function EngineeringCapabilities() {
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-  // Client note: as the user scrolls, the object turns mildly and grows.
+  // Client note: mild scroll-driven turn + growth, capped so the render
+  // never scales past its served resolution (stays crisp).
   const bgRotate = useTransform(bgProgress, [0, 1], [-9, 9]);
-  const bgScale = useTransform(bgProgress, [0, 0.5, 1], [1.15, 1.42, 1.62]);
+  const bgScale = useTransform(bgProgress, [0, 0.5, 1], [1.02, 1.16, 1.28]);
   const bgY = useTransform(bgProgress, [0, 1], ["-6%", "6%"]);
 
   return (
@@ -96,14 +97,14 @@ export function EngineeringCapabilities() {
       {/* twirling BRIAM sculpture background (white render on black → blends into ink) */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[110%] w-[145%] max-w-[1900px] -translate-x-1/2 -translate-y-1/2"
+        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[100%] w-[130%] max-w-[1600px] -translate-x-1/2 -translate-y-1/2"
         style={reduce ? undefined : { rotate: bgRotate, scale: bgScale, y: bgY }}
       >
         <Image
           src="/images/sculpture.png"
           alt=""
           fill
-          sizes="80vw"
+          sizes="2048px"  // serve the high-res variant — the render scales up to ~2050px displayed
           className="object-contain opacity-70 mix-blend-lighten"
         />
       </motion.div>
